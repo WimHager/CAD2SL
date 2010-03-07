@@ -16,8 +16,26 @@
     along with CAD2SL.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-$PrimParmStr= "";
-$PrimFile= "Wimpie Halderman-1.prim";
+$library= simplexml_load_file('blokjes.x3d');
+//print_r($library); //Shows you what array are in it
+foreach ($library->Scene as $Scene) {
+	foreach ($Scene->Transform as $Transform) {
+		echo "Pos: ".$Transform[translation]."  ";
+		foreach ($Transform->Shape as $Shape) {
+			foreach ($Shape->Appearance as $Appearance) {
+				foreach ($Appearance->Material as $Material) {
+					$attributes= get_object_vars($Material);
+					$Color= $attributes["@attributes"]["DEF"];
+					echo "Color: ".$Color."  ";
+				}	
+			}
+			foreach ($Shape->Box as $Box) {
+				$attributes= get_object_vars($Box); 
+				$Size= $attributes["@attributes"]["size"];
+				echo "Size: ".$Size."\n"; 
+			}
+		}
+	}
 
-
-?>
+}
+?> 

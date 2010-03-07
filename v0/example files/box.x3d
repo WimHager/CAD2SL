@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D profile='Immersive' >
+<head>
+ <meta name='Vizthumbnail' content='Thumb_Untitled_x3d1917441267824762.jpg'/>
+ <meta name='ExportTime' content='22:32:42'/>
+ <meta name='ExportDate' content='3/5/2010'/>
+ <meta name='FluxStudioVersion' content='659'/>
+</head>
+<Scene>
+<WorldInfo
+ title='Untitled'
+ info='"This Web3D Content was created with Flux Studio, a Web3D authoring tool"
+ "www.mediamachines.com"'/>
+<Transform DEF='dad_Box1'
+ translation='.06864 0 .04576'>
+ <Shape DEF='Box1'
+  containerField='children'>
+  <Appearance
+   containerField='appearance'>
+   <Material DEF='Red'
+    containerField='material'
+    ambientIntensity='0.200'
+    shininess='0.200'
+    diffuseColor='1 0 0'/>
+  </Appearance>
+  <Box DEF='GeoBox1'
+   containerField='geometry'
+   size='1 1 1'/>
+ </Shape>
+</Transform>
+</Scene>
+</X3D>

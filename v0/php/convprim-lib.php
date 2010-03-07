@@ -1,5 +1,22 @@
 <?php
 
+/*
+    This file is part of CAD2SL.
+
+    CAD2SL is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    CAD2SL is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with CAD2SL.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 
 // FUNCTIONS BLOCK=========================================================
 
@@ -55,6 +72,41 @@ function AddPhantom($Enable) {
 // SetPhysical-------------------------------------------------------------
 function AddPhysical($Enable) {
 	return "1=3|1=".$Enable;
+}
+// ------------------------------------------------------------------------
+
+// Get AllBoxes from X3D---------------------------------------------------
+function GetBoxes($FileName) {
+	$BoxArr= array();
+	$ObjC= 0;
+	$X3Data= simplexml_load_file($FileName);
+	foreach ($X3Data->Scene as $Scene) {
+		foreach ($Scene->Transform as $Transform) {
+			$Pos= (string)$Transform[translation]; //Get Object Pos
+			$Pos= explode(" ",$Pos); //Make it XYZ
+			$BoxArr[$ObjC]["Pos"]= $Pos;
+			$Rot= (string)$Transform[rotation];  //Get Oject Rotation
+			$Rot= explode(" ",$Rot);  //Make it XYZ
+			$BoxArr[$ObjC]["Rot"]= $Rot;
+			foreach ($Transform->Shape as $Shape) {
+				foreach ($Shape->Appearance as $Appearance) {
+					foreach ($Appearance->Material as $Material) {
+						$Attributes= get_object_vars($Material);
+						$Color= (string)$Attributes["@attributes"]["DEF"];
+						$BoxArr[$ObjC]["Color"]= $Color; //Get Object Color
+					}	
+				}
+				foreach ($Shape->Box as $Box) {
+					$Attributes= get_object_vars($Box); //Get Object Size
+					$Size= (string)$Attributes["@attributes"]["size"];
+					$Size= explode(" ",$Size);  //Make it XYZ
+					$BoxArr[$ObjC]["Size"]= $Size; 
+				}
+			}
+			$ObjC++;
+		}
+	}
+	return $BoxArr;
 }
 // ------------------------------------------------------------------------
 
