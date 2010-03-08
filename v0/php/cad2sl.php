@@ -56,12 +56,12 @@ $hash = md5($data.':'.$nonce);
 
 if ($func == "PUT") {
 	if ($cryp == $hash) {
-		save_data($key,$data);
+		save_data($name,$data);
 		echo "Data ok.";
 	}else{ echo "Received Corrupt Data!!"; }
 }
 if ($func == "GET") {
-	$data = load_data($key);
+	$data = load_data($name);
 	$hash = md5($data.':'.$nonce);
 	echo "&cryp=".$hash."&data=".$data; //Don't change order !!!
 }
