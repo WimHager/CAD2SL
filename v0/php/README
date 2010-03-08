@@ -1,9 +1,12 @@
 This directory contains the PHP scripts you have to use on your server.
 
+HTTP Call from inworld is to cad2sl.php now.
+
 ToDo:
 
 Save prims for project as array in one file. Maybe X3D file as name. eg. house.prim
 Layout will be: CRC,PrimNr,Data.
 Slave Prim need a redo on collecting data. we will call it CAD2SL slave.
 Rezzing the slave with a param for it's number. Need to be done from same startpoint.
+
 Thinking about how to upload data from web.
