@@ -12,6 +12,7 @@ function write_log($filename, $message) {
 
 function load_data($filename) {
     $content= file_get_contents($filename);
+    explode("/n", $content);
     return($content);
 }
 
@@ -38,15 +39,17 @@ $ownerName  = $headers["X-SecondLife-Owner-Name"];
 $region     = $headers["X-SecondLife-Region"];
 
 // get things from $_POST[]
-$key	= $_POST["key"];
+$name	= $_POST["name"];
 $func	= $_POST["func"];
 $cryp	= $_POST["cryp"];
+$primnr	= $_POST["primnr"];
 $data	= $_POST["data"];
 
 if (strlen($func) < 3) {
 	echo "Wrong SHA1 KEY, Action logged !!"; 
 	exit;
 }
+
 
 $nonce = 0;
 $hash = md5($data.':'.$nonce);
