@@ -1,0 +1,24 @@
+<X3D profile='Interchange' version='3.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation=' http://www.web3d.org/specifications/x3d-3.0.xsd '>
+<head>
+<meta name='title' content='Box.x3d'/>
+<meta name='description' content='Simple Box shape used as test scene for GeoInline/Inline loading and unloading.'/>
+<meta name='translator' content=' Xeena VRML importer, X3D-Edit 3.1, http://www.web3d.org/x3d/content/README.X3D-Edit.html '/>
+<meta name='imported' content='22 April 2003'/>
+<meta name='modified' content='22 November 2003'/>
+<meta name='reference' content=' http://www.web3d.org/x3d/content/examples/Basic/GeoSpatial/A3_GeoInline.x3d '/>
+<meta name='identifier' content=' http://www.web3d.org/x3d/content/examples/Basic/GeoSpatial/Box.x3d '/>
+<meta name='generator' content='X3D-Edit 3.2, https://savage.nps.edu/X3D-Edit'/>
+<meta name='generator' content='Vrml97ToX3dNist, http://ovrt.nist.gov/v2_x3d.html'/>
+<meta name='license' content='../license.html'/>
+</head>
+<Scene>
+<Transform translation='-1.0 0.0 0.0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.0 1.0 0.0'/>
+</Appearance>
+<Box/>
+</Shape>
+</Transform>
+</Scene>
+</X3D> 
