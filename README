@@ -1,2 +1,8 @@
 This is CAD2SL, a project to convert 3D CAD output into Second Life world.
 Strored CAD output is converted to SL prim info.
+
+For testing and creating X3D files we are now using Flux Studio.
+http://mediamachines.wordpress.com/flux-player-and-flux-studio/
+
+
+
