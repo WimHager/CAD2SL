@@ -23,7 +23,7 @@ $data	= $_POST["data"];	//prim data
 //}
 
 $data= load_data($name);
-$hash= md5($data[$i].':'.$nonce);
+$hash= md5($data[$primnr].':'.$nonce);
 echo "&md5=".$hash."&data=".$data[$primnr]."&total=".count($data); //Don't change order !!!
 
 
