@@ -113,6 +113,7 @@ function ConvInputFileToOutputStr($FileN) {
 	//To do adding all primitve types
 	//adding more primitive params
 	//use separator = | !!!!!!!
+
 	//$PrimParmStr.= AddBlockSize(1.000000, 0.500000, 0.500000). "|";
 	//$PrimParmStr.= AddBlockPos(255.000000, 70.000000, 1000.500000)."|";
 	//$PrimParmStr.= AddBlockRot(0.000000, 0.000000, 0.000000, 1.000000."|");
@@ -126,7 +127,8 @@ function ConvInputFileToOutputStr($FileN) {
 	$i= 0;
 	$PrimParmStr= "";
 	foreach ($BoxArr as $Parts) {
-		$PrimParmStr= AddBlockSize($BoxArr[$i]["Size"][0], $BoxArr[$i]["Size"][1], $BoxArr[$i]["Size"][2]);
+		$PrimParmStr=  AddBlockSize($BoxArr[$i]["Size"][0], $BoxArr[$i]["Size"][1], $BoxArr[$i]["Size"][2])."|"; //Size
+		$PrimParmStr.= AddBlockPos ($BoxArr[$i]["Pos" ][0], $BoxArr[$i]["Pos" ][1], $BoxArr[$i]["Pos" ][2]);	 //Pos
 		$PrimParmStr= CountParms($PrimParmStr)."|".$PrimParmStr; // add objects count at begin
 		$ObjStr.= $PrimParmStr."\n";
 		$i++;
