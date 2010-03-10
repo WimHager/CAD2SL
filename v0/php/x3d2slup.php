@@ -4,7 +4,8 @@
 $location="uploads/"; //of een andere map, vergeet niet de w-rechten
 $allowed = array ("x3d", "X3D"); // extensies die toegestaan zijn
 $max_size = 1500; //maximale grootte van het file in bytes /1024 = kb /1024 = mb
-$youresite = "http://www.youresite.com/"; // eindigent op een slash
+$youresite = "http://tuxed.nl/"; // eindigent op een slash
+$fileperm = 0444;
  
 //stop met veranderen
  
@@ -15,7 +16,7 @@ if(isset($_POST['upload']))
         $extention_file = pathinfo($_FILES['file']['name']);
         $extention_file = $extention_file[extension];
  
-        $extensies_toegestaan = explode(", ", $allowed);
+        $extentions_allowed = explode(", ", $allowed);
  
         $ok = in_array($extention_file, $allowed);
  
@@ -32,12 +33,12 @@ if(isset($_POST['upload']))
                 echo "File cann't be placed";
                 exit;
             }
- 
-            echo "Het file ".$_FILES['file']['name']." is geupload<br /><a href='".$location.$_FILES['file']['name']."' target='_blank'>click here to view the file</a><br />The link is : ". $youresite . $location .$_FILES['file']['name'];
+ 	    chmod($location . $_FILES['file']['name'], $fileperm);
+            echo "File ".$_FILES['file']['name']." is uploaded<br /><a href='".$location.$_FILES['file']['name']."' target='_blank'>click here to view the file</a><br />The link is : ". $youresite . $location .$_FILES['file']['name'];
         }
         else
         {
-            echo "Wrong extention, allowd extentions are: <b>".$allowed."</b>";
+            echo "Wrong extention, allowd extentions are: <b>".$allowed[0].' '.$allowed[1]."</b>";
         }
     }
     else
@@ -52,3 +53,4 @@ if(isset($_POST['upload']))
 <input type="file" name="file" /><br />
 <input type="submit" name="upload" value="Uploaden!" />
 </form>
+
