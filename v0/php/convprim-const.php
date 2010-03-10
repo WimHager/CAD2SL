@@ -16,8 +16,5 @@
     along with CAD2SL.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-$PrimParmStr= "";
-$PrimFile= "Wimpie Halderman-1.prim";
-
 
 ?>
