@@ -1,5 +1,5 @@
 <?php
-//Edit this part tou your needs========================================= 
+//Edit this part to your needs========================================== 
  
 $location=  "uploads/";			//Upload directory, must have write rights
 $allowed=   array ("x3d", "X3D"); 	// Allowed extensions
@@ -24,7 +24,7 @@ if(isset($_POST['upload']))
         {
             if($_FILES['file']['size'] > $max_size)
             {
-                echo "File is too big, max. file size is: <b>".$max_size."</b>";
+                echo "File is too big, Max. file size is: <b>".$max_size."</b>";
                 exit;
             }
  
