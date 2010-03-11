@@ -1,60 +1,56 @@
-<?
-
-//todo: filter on SL servers only
-
-// Only works with PHP compiled as an Apache module
-//$headers = apache_request_headers();
-$headers = request_headers();
-
-$objectName = $headers["X-SecondLife-Object-Name"];
-$objectKey  = $headers["X-SecondLife-Object-Key"];
-$ownerKey   = $headers["X-SecondLife-Owner-Key"];
-$ownerName  = $headers["X-SecondLife-Owner-Name"];
-$region     = $headers["X-SecondLife-Region"];
-$nonce	    = 0;
-
-// get things from $_POST[]
-$name	= $_POST["name"]; 	//file name
-$primnr	= $_POST["primnr"];	//prim number we want to read
-$data	= $_POST["data"];	//prim data
-
-//if (strlen($func) < 3) {
-//	echo "Wrong SHA1 KEY, Action logged !!"; 
-//	exit;
-//}
-
-$data= load_data($name);
-$hash= trim(md5($data[$primnr].':'.$nonce));
-echo "&md5=".$hash."&data=".$data[$primnr]."&total=".count($data); //Don't change order !!!
-
-
-
-
-// Functions block =============================================================================
-
-function write_log($filename, $message) {
-    $fp = fopen($filename, "a+");
-    fwrite($fp, date("[Y/m/d-H:i:s];").$message."\n");
-    fclose($fp);
+<?php
+//Edit this part to your needs========================================== 
+ 
+$location=  "uploads/";			//Upload directory, must have write rights
+$allowed=   array ("x3d", "X3D"); 	// Allowed extensions
+$max_size=  1500;			//Max. File size in bytes /1024 = kb /1024 = mb
+$youresite= "http://yoursite.com/"; 	// Must end with trailing slash.
+$fileperm=  0444;
+ 
+//End of part===========================================================
+ 
+if(isset($_POST['upload']))
+{
+    if(is_uploaded_file($_FILES['file']['tmp_name']))
+    {
+        $extention_file = pathinfo($_FILES['file']['name']);
+        $extention_file = $extention_file[extension];
+ 
+        $extentions_allowed = explode(", ", $allowed);
+ 
+        $ok = in_array($extention_file, $allowed);
+ 
+        if($ok == 1)
+        {
+            if($_FILES['file']['size'] > $max_size)
+            {
+                echo "File is too big, Max. file size is: <b>".$max_size."</b>";
+                exit;
+            }
+ 
+            if(!move_uploaded_file($_FILES['file']['tmp_name'],$location.$_FILES['file']['name']))
+            {
+                echo "File cannot be placed";
+                exit;
+            }
+ 	    chmod($location . $_FILES['file']['name'], $fileperm);
+            echo "File ".$_FILES['file']['name']." is uploaded<br /><a href='".$location.$_FILES['file']['name']."' target='_blank'>click here to view the file</a><br />The link is : ". $youresite . $location .$_FILES['file']['name'];
+        }
+        else
+        {
+            echo "Wrong extention, allowd extentions are: <b>".$allowed[0].' '.$allowed[1]."</b>";
+        }
+    }
+    else
+    {
+        echo "Upload has failed!!!";
+    }
+ 
 }
+?>
+<br />
+<form method="post" action="" enctype="multipart/form-data">
+<input type="file" name="file" /><br />
+<input type="submit" name="upload" value="Uploaden!" />
+</form>
 
-function load_data($filename) {
-    $content= file_get_contents($filename);
-    $content= trim($content, "\n");	
-    $content= explode("\n", $content);
-    return($content);
-}
-
-function save_data($filename, $data) {
-    file_put_contents($filename, $data);
-}
-
-function request_headers() { // Replacement if apache_request_headers not exist 
-    foreach($_SERVER as $name => $value)
-    if(substr($name, 0, 5) == 'HTTP_')
-        $headers[str_replace('X-Secondlife-', 'X-SecondLife-', str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5))))))] = $value;
-    return $headers;
-}
-
-
-?> 

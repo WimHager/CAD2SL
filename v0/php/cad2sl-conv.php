@@ -17,8 +17,8 @@
 */
 
 
-include 'convprim-const.php';
-include 'convprim-lib.php';
+include 'cad2sl-const.php';
+include 'cad2sl-lib.php';
 
 
 // Main
