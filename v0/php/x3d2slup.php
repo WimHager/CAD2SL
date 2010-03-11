@@ -11,7 +11,8 @@ $fileperm=  0444;
  
 //End of part===========================================================
  
-if(isset($_POST['upload'])) {
+if(isset($_POST['upload'])) 
+{
 	if(is_uploaded_file($_FILES['file']['tmp_name'])) 
 	{
 		$extention_file = pathinfo($_FILES['file']['name']);
