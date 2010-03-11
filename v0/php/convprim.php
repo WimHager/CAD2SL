@@ -27,7 +27,7 @@ include 'convprim-lib.php';
 
 
 
-WriteData(ConvInputFileToOutputStr('blokjes.x3d'),'blokjes.prim');
+WriteData(ConvInputFileToOutputStr('4wall.x3d'),'4wall.prim');
 
 //==========================================================================
 
