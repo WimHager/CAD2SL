@@ -76,6 +76,7 @@ function AddPhysical($Enable) {
 // ------------------------------------------------------------------------
 
 // Get AllBoxes from X3D---------------------------------------------------
+// Todo: make init array with defaults.
 function GetBoxes($FileName) {
 	$BoxArr= array();
 	$ObjC= 0;
