@@ -17,8 +17,11 @@
 
 
 string  PrimKey;
-string  Url= "Path to cad2sl-bridge.php";
-float   UpdateTime= 20; //prim updates in Sec
+string  Url= "http://Path to cad2sl-bridge.php";
+float   UpdateTime= 2; //prim updates in Sec
+
+string  ObjectName= "4wall.prim";
+integer PrimNr= 0;
 
 string  DefaultKey= "00000000-0000-0000-0000-0000";
 list    PrimParmLst;
@@ -116,7 +119,7 @@ default
             llSleep(20);
         }
         NoteQueryId = llGetNotecardLine(NoteName, Line);
-        ReadDefaultKey();
+        //ReadDefaultKey();
         llSensorRepeat("", "", AGENT, 30.0, PI, UpdateTime);
     }
 
@@ -128,8 +131,10 @@ default
         if (PrimKey == DefaultKey) {
             ReadDefaultKey();       
         }else{   
-            string ParsStr= "&name=4wall.prim"+"&primnr="+"0";
+            string ParsStr= "&name="+ObjectName+"&primnr="+(string)PrimNr;
             HttpRequestId= llHTTPRequest(Url,[HTTP_METHOD, "POST",HTTP_MIMETYPE,"application/x-www-form-urlencoded"],ParsStr); 
+            PrimNr++;
+            if (PrimNr > 3) PrimNr= 0;
         }    
     }        
      
@@ -138,12 +143,12 @@ default
             if (Status == 200) {
                 string PrimData= llStringTrim(GetSubString(Body,"&data=" ,"&total"),STRING_TRIM);
                 string Hash=     llStringTrim(GetSubString(Body,"&md5=","&data="),STRING_TRIM);
-                llOwnerSay(PrimData);
+                //llOwnerSay(PrimData);
                 if (Hash == llMD5String(PrimData,0)) { 
                     PrimData= PosCorrection(PrimData); //Add Pos to rezz point           
                     PrimParmLst= Deserialize(PrimData);
                     if (!ListCompare(PrimParmLst,PrevPrimParmLst)) {
-                        llOwnerSay("Master Prim Data Changed.");
+                        //llOwnerSay("Master Prim Data Changed.");
                         llSetPrimitiveParams(PrimParmLst); 
                         PrevPrimParmLst= PrimParmLst;
                         llSetText("",<0,0,0>,0);
