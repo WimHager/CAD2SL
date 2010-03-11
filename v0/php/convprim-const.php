@@ -16,5 +16,7 @@
     along with CAD2SL.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+$OutputExt= "prim";		//Converted data extension
+
 
 ?>

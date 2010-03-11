@@ -24,10 +24,10 @@ include 'convprim-lib.php';
 // Main
 //==========================================================================
 
+$InF= 	"4wall.x3d";
+$OutF=	preg_replace('/\..+$/', '.' . $GLOBALS[$OutputExt], $InF);
 
-
-
-WriteData(ConvInputFileToOutputStr('4wall.x3d'),'4wall.prim');
+WriteData(ConvInputFileToOutputStr($InF), $OutF);
 
 //==========================================================================
 
