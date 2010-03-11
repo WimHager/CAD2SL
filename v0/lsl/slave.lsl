@@ -13,19 +13,22 @@
 //    You should have received a copy of the GNU General Public License
 //    along with CAD2SL.  If not, see <http://www.gnu.org/licenses/>.
 
+//ToDo test with longer stream data
+
 
 string  PrimKey;
-string  Url= "URL TO your server php file";
+string  Url= "Path to cad2sl-bridge.php";
 float   UpdateTime= 20; //prim updates in Sec
 
 string  DefaultKey= "00000000-0000-0000-0000-0000";
 list    PrimParmLst;
 list    PrevPrimParmLst;
 key     HttpRequestId;
-string  NoteName= "CloneKey";
+string  NoteName= "ObjectName";
 integer Line= 0;
 key     NoteQueryId; 
 string  OwnerName;
+vector  OrgPos;
 
 
 string GetSubString(string String, string StartStr, string EndStr) { // Use EOL for End Of line
@@ -63,6 +66,40 @@ list Deserialize(string Inp){
     return Pair;
 }
 
+
+string StrReplace(string Src, string From, string To) {//replaces all occurrences of 'from' with 'to' in 'src'.
+    integer Len= (~-(llStringLength(From)));
+    if(~Len) {
+        string  Buffer= Src;
+        integer BPos= -1;
+        integer ToLen= (~-(llStringLength(To)));
+        @Loop; //instead of a while loop, saves 5 bytes (and run faster).
+        integer ToPos = ~llSubStringIndex(Buffer, From);
+        if(ToPos) {
+            Buffer= llGetSubString(Src= llInsertString(llDeleteSubString(Src, BPos -= ToPos, BPos + Len), BPos, To), (-~(BPos += ToLen)), 0x8000);
+            jump Loop;
+        }
+    }
+    return Src;
+}
+
+string GetPosPartFromStream(string Stream) {
+    integer StartPos= llSubStringIndex(Stream,"|1=6|5=");       //Look for Pos start in stream
+    string  TmpStr=   llDeleteSubString(Stream, 0, StartPos);
+    integer EndPos=   llSubStringIndex(TmpStr,">")+1;
+    return llGetSubString(TmpStr,0,EndPos);
+}    
+
+string PosCorrection(string Stream) { //Replaces Stream with Pos relative rezz point
+    string PosStr= GetPosPartFromStream(Stream);
+    vector CadPos= (vector)llGetSubString(PosStr,6,-1);
+    vector NewPos= OrgPos+ CadPos; //add this to rezz Pos
+    string NewPosStr= "1=6|5="+(string)NewPos;
+    string NewStream= StrReplace(Stream,PosStr,NewPosStr);
+    //llOwnerSay(NewStream);
+    return NewStream;
+}    
+
 ReadDefaultKey() {
     string ParsStr= "key="+DefaultKey+"&func="+"GET";
     HttpRequestId= llHTTPRequest(Url,[HTTP_METHOD, "POST",HTTP_MIMETYPE,"application/x-www-form-urlencoded"],ParsStr);
@@ -71,6 +108,7 @@ ReadDefaultKey() {
 default
 {
     state_entry() {
+        OrgPos= llGetPos();
         llSetText("Initialize...",<1,1,1>,1);
         OwnerName= llKey2Name(llGetOwner());
         while (llGetInventoryType(NoteName) == -1) {
@@ -90,7 +128,7 @@ default
         if (PrimKey == DefaultKey) {
             ReadDefaultKey();       
         }else{   
-            string ParsStr= "key="+OwnerName+"-"+PrimKey+"&func="+"GET";
+            string ParsStr= "&name=4wall.prim"+"&primnr="+"0";
             HttpRequestId= llHTTPRequest(Url,[HTTP_METHOD, "POST",HTTP_MIMETYPE,"application/x-www-form-urlencoded"],ParsStr); 
         }    
     }        
@@ -98,10 +136,11 @@ default
     http_response(key RequestId, integer Status, list MetaData, string Body) {
         if (RequestId == HttpRequestId) {
             if (Status == 200) {
-                string PrimData= llStringTrim(GetSubString(Body,"&data=" ,"EOL"),STRING_TRIM);
-                string Hash=     llStringTrim(GetSubString(Body,"&crypt=","&data="),STRING_TRIM); 
-                //llOwnerSay(Hash+"  "+llMD5String(PrimData,0)); 
-                if (Hash == llMD5String(PrimData,0)) {            
+                string PrimData= llStringTrim(GetSubString(Body,"&data=" ,"&total"),STRING_TRIM);
+                string Hash=     llStringTrim(GetSubString(Body,"&md5=","&data="),STRING_TRIM);
+                llOwnerSay(PrimData);
+                if (Hash == llMD5String(PrimData,0)) { 
+                    PrimData= PosCorrection(PrimData); //Add Pos to rezz point           
                     PrimParmLst= Deserialize(PrimData);
                     if (!ListCompare(PrimParmLst,PrevPrimParmLst)) {
                         llOwnerSay("Master Prim Data Changed.");
