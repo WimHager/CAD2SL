@@ -1,13 +1,13 @@
 <?php
-//verander de onderstaande gegevens
+//Edit this part tou your needs========================================= 
  
-$location="uploads/"; //of een andere map, vergeet niet de w-rechten
-$allowed = array ("x3d", "X3D"); // extensies die toegestaan zijn
-$max_size = 1500; //maximale grootte van het file in bytes /1024 = kb /1024 = mb
-$youresite = "http://tuxed.nl/"; // eindigent op een slash
-$fileperm = 0444;
+$location=  "uploads/";			//Upload directory, must have write rights
+$allowed=   array ("x3d", "X3D"); 	// Allowed extensions
+$max_size=  1500;			//Max. File size in bytes /1024 = kb /1024 = mb
+$youresite= "http://yoursite.com/"; 	// Must end with trailing slash.
+$fileperm=  0444;
  
-//stop met veranderen
+//End of part===========================================================
  
 if(isset($_POST['upload']))
 {
@@ -30,7 +30,7 @@ if(isset($_POST['upload']))
  
             if(!move_uploaded_file($_FILES['file']['tmp_name'],$location.$_FILES['file']['name']))
             {
-                echo "File cann't be placed";
+                echo "File cannot be placed";
                 exit;
             }
  	    chmod($location . $_FILES['file']['name'], $fileperm);
