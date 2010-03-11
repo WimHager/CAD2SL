@@ -25,7 +25,7 @@ include 'cad2sl-lib.php';
 //==========================================================================
 
 $InF= 	"4wall.x3d";
-$OutF=	preg_replace('/\..+$/', '.' . $GLOBALS[$OutputExt], $InF);
+$OutF=	preg_replace('/\..+$/', '.' . $GLOBALS['OutputExt'], $InF);
 
 WriteData(ConvInputFileToOutputStr($InF), $OutF);
 
