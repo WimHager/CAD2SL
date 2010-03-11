@@ -11,6 +11,7 @@ $objectKey  = $headers["X-SecondLife-Object-Key"];
 $ownerKey   = $headers["X-SecondLife-Owner-Key"];
 $ownerName  = $headers["X-SecondLife-Owner-Name"];
 $region     = $headers["X-SecondLife-Region"];
+$nonce	    = 0;
 
 // get things from $_POST[]
 $name	= $_POST["name"]; 	//file name
@@ -23,8 +24,10 @@ $data	= $_POST["data"];	//prim data
 //}
 
 $data= load_data($name);
-$hash= md5($data[$primnr].':'.$nonce);
+$hash= trim(md5($data[$primnr].':'.$nonce));
 echo "&md5=".$hash."&data=".$data[$primnr]."&total=".count($data); //Don't change order !!!
+
+
 
 
 // Functions block =============================================================================

@@ -31,22 +31,22 @@ function WriteData($Str,$FileN) {
 
 }
 
-
+// LSL Float is 5 digits !!!
 // SetSize----------------------------------------------------------------
 function AddBlockSize($X, $Y, $Z) {
-	return "1=7|5=<".number_format($X,6,".","").",".number_format($Y,6,".","").",".number_format($Z,6,".","").">";
+	return "1=7|5=<".number_format($X,5,".","").",".number_format($Y,5,".","").",".number_format($Z,5,".","").">";
 }
 // -----------------------------------------------------------------------
 
 // SetPos-----------------------------------------------------------------
 function AddBlockPos($X, $Y, $Z) {
-	return "1=6|5=<".number_format($X,6,".","").",".number_format($Y,6,".","").",".number_format($Z,6,".","").">";
+	return "1=6|5=<".number_format($X,5,".","").",".number_format($Y,5,".","").",".number_format($Z,5,".","").">";
 }
 // -----------------------------------------------------------------------
 
 // SetRot-----------------------------------------------------------------
 function AddBlockRot($X, $Y, $Z, $S) {
-	return "1=6|5=<".number_format($X,6,".","").",".number_format($Y,6,".","").",".number_format($Z,6,".","").",".number_format($S,6,".","").">";
+	return "1=6|5=<".number_format($X,5,".","").",".number_format($Y,5,".","").",".number_format($Z,5,".","").",".number_format($S,5,".","").">";
 }
 // -----------------------------------------------------------------------
 
@@ -76,6 +76,7 @@ function AddPhysical($Enable) {
 // ------------------------------------------------------------------------
 
 // Get AllBoxes from X3D---------------------------------------------------
+// Todo: make init array with defaults.
 function GetBoxes($FileName) {
 	$BoxArr= array();
 	$ObjC= 0;
