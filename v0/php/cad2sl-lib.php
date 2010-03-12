@@ -72,7 +72,7 @@ function AddPrimMaterial($Material) {
 // SetColor-----------------------------------------------------------------
 function AddBlockCol($Color) {
 	global $Colors;
-	return "1=18|1=1|5=".$Colors[$Color]."|1=1";
+	return "1=18|1=-1|5=".$Colors[$Color]."|2=1.00000";
 }
 // -----------------------------------------------------------------------
 
@@ -118,7 +118,7 @@ function GetBoxes($FileName) {
 
 						//Need some investigation Why it uses DEF and USE labels!
 						$Color= (string)$Attributes["@attributes"]["DEF"];
-						$Color= (string)$Attributes["@attributes"]["USE"];
+						if (empty($Color)) $Color= (string)$Attributes["@attributes"]["USE"];
 
 						if (empty($Color)) $BoxArr[$ObjC]["Color"]= "None";
 						else $BoxArr[$ObjC]["Color"]= $Color; //Get Object Color
