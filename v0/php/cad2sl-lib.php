@@ -86,15 +86,29 @@ function GetBoxes($FileName) {
 			$Pos= (string)$Transform[translation]; //Get Object Pos
 			$Pos= explode(" ",$Pos); //Make it XYZ
 			$BoxArr[$ObjC]["Pos"]= $Pos;
+
 			$Rot= (string)$Transform[rotation];  //Get Oject Rotation
 			$Rot= explode(" ",$Rot);  //Make it XYZ
-			$BoxArr[$ObjC]["Rot"]= $Rot;
+
+			// Check if Rotation is in file else set defaults
+			if(count($Rot) == 3) $BoxArr[$ObjC]["Rot"]= $Rot;
+			else{ 
+				$BoxArr[$ObjC]["Rot"][0]= 0;
+				$BoxArr[$ObjC]["Rot"][1]= 0;
+				$BoxArr[$ObjC]["Rot"][2]= 0;
+			}
+
 			foreach ($Transform->Shape as $Shape) {
 				foreach ($Shape->Appearance as $Appearance) {
 					foreach ($Appearance->Material as $Material) {
 						$Attributes= get_object_vars($Material);
+
+						//Need some investigation Why it uses DEF and USE labels!
 						$Color= (string)$Attributes["@attributes"]["DEF"];
-						$BoxArr[$ObjC]["Color"]= $Color; //Get Object Color
+						$Color= (string)$Attributes["@attributes"]["USE"];
+
+						if (empty($Color)) $BoxArr[$ObjC]["Color"]= "NONE";
+						else $BoxArr[$ObjC]["Color"]= $Color; //Get Object Color
 					}	
 				}
 				foreach ($Shape->Box as $Box) {
@@ -107,6 +121,7 @@ function GetBoxes($FileName) {
 			$ObjC++;
 		}
 	}
+	print_r($BoxArr);
 	return $BoxArr;
 }
 
