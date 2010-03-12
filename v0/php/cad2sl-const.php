@@ -16,20 +16,18 @@
     along with CAD2SL.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-$OutputExt= "prim";	//Converted data extension
+$OutputExt= "test";	//Converted data extension
 
-$Colors["LogFile", "cad2sl.log>");
+define("LogFile", "cad2sl.log>");
 
 //Color table
-$Colors["Red"]=		"<1.0,0.0,0.0>";
-$Colors["Green"]=	"<0.0,1.0,0.0>";
-$Colors["Blue"]=	"<0.0,0.0,1.0>";
-$Colors["Purple"]=	"<1.0,1.0,0.0>";
-$Colors["Yellow"]=	"<0.0,1.0,1.0>";
-$Colors["Black"]=	"<0.0,0.0,0.0>";
-$Colors["White"]=	"<1.0,1.0,1.0>";
-
-
-
+$Colors["Red"]=		"<1.00000,0.00000,0.00000>";
+$Colors["Green"]=	"<0.00000,1.00000,0.00000>";
+$Colors["Blue"]=	"<0.00000,0.00000,1.00000>";
+$Colors["Purple"]=	"<1.00000,1.00000,0.00000>";
+$Colors["Yellow"]=	"<0.00000,1.00000,1.00000>";
+$Colors["Black"]=	"<0.00000,0.00000,0.00000>";
+$Colors["White"]=	"<1.00000,1.00000,1.00000>";
+$Colors["None"]=	"<1.00000,1.00000,1.00000>";
 
 ?>

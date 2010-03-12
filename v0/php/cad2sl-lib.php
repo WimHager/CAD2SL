@@ -69,6 +69,13 @@ function AddPrimMaterial($Material) {
 }
 // -----------------------------------------------------------------------
 
+// SetColor-----------------------------------------------------------------
+function AddBlockCol($Color) {
+	global $Colors;
+	return "1=18|1=1|5=".$Colors[$Color]."|1=1";
+}
+// -----------------------------------------------------------------------
+
 // SetPhantom-------------------------------------------------------------
 function AddPhantom($Enable) {
 	return "1=5|1=".$Enable;
@@ -113,7 +120,7 @@ function GetBoxes($FileName) {
 						$Color= (string)$Attributes["@attributes"]["DEF"];
 						$Color= (string)$Attributes["@attributes"]["USE"];
 
-						if (empty($Color)) $BoxArr[$ObjC]["Color"]= "NONE";
+						if (empty($Color)) $BoxArr[$ObjC]["Color"]= "None";
 						else $BoxArr[$ObjC]["Color"]= $Color; //Get Object Color
 					}	
 				}
@@ -145,12 +152,14 @@ function ConvInputFileToOutputStr($FileN) {
 	//$PrimParmStr.= AddPrimMaterial(3);
 	//$PrimParmStr= CountParms($PrimParmStr)."|".$PrimParmStr; // add objects counter at begin
 
+
 	$BoxArr= GetBoxes($FileN);
 	$i= 0;
 	$PrimParmStr= "";
 	foreach ($BoxArr as $Parts) {
 		$PrimParmStr=  AddBlockSize($BoxArr[$i]["Size"][0], $BoxArr[$i]["Size"][1], $BoxArr[$i]["Size"][2])."|"; //Size
-		$PrimParmStr.= AddBlockPos ($BoxArr[$i]["Pos" ][0], $BoxArr[$i]["Pos" ][1], $BoxArr[$i]["Pos" ][2]);	 //Pos
+		$PrimParmStr.= AddBlockPos ($BoxArr[$i]["Pos" ][0], $BoxArr[$i]["Pos" ][1], $BoxArr[$i]["Pos" ][2])."|"; //Pos
+		$PrimParmStr.= AddBlockCol ($BoxArr[$i]["Color"]);  //Color
 		$PrimParmStr= CountParms($PrimParmStr)."|".$PrimParmStr; // add objects count at begin
 		$ObjStr.= $PrimParmStr."\n";
 		$i++;
