@@ -127,7 +127,7 @@ function GetBoxes($FileName) {
 			$ObjC++;
 		}
 	}
-	print_r($BoxArr);
+	//print_r($BoxArr);
 	return $BoxArr;
 }
 

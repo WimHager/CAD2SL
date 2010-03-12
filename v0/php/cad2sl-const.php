@@ -18,16 +18,17 @@
 
 $OutputExt= "prim";	//Converted data extension
 
-define("LogFile", "cad2sl.log>");
+$Colors["LogFile", "cad2sl.log>");
 
 //Color table
-define("Red",		"<1.0,0.0,0.0>", true);
-define("Green",		"<0.0,1.0,0.0>", true);
-define("Blue",		"<0.0,0.0,1.0>", true);
-define("Purple",	"<1.0,1.0,0.0>", true);
-define("Yellow",	"<0.0,1.0,1.0>", true);
-define("Black",		"<0.0,0.0,0.0>", true);
-define("White",		"<1.0,1.0,1.0>", true);
+$Colors["Red"]=		"<1.0,0.0,0.0>";
+$Colors["Green"]=	"<0.0,1.0,0.0>";
+$Colors["Blue"]=	"<0.0,0.0,1.0>";
+$Colors["Purple"]=	"<1.0,1.0,0.0>";
+$Colors["Yellow"]=	"<0.0,1.0,1.0>";
+$Colors["Black"]=	"<0.0,0.0,0.0>";
+$Colors["White"]=	"<1.0,1.0,1.0>";
+
 
 
 
