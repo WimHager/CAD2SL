@@ -20,6 +20,12 @@
 
 // FUNCTIONS BLOCK=========================================================
 
+function write_log($FileName, $Message) {
+    $fp= fopen($FileName, "a+");
+    fwrite($fp, date("[Y/m/d-H:i:s];").$Message."\n");
+    fclose($fp);
+}
+
 function CountParms($Str) {
 	$Nr= count(explode("|",$Str));
 	return $Nr;
