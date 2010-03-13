@@ -16,7 +16,7 @@
     along with CAD2SL.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-$OutputExt= "test";	//Converted data extension
+$OutputExt= "prim";	//Converted data extension
 
 define("LogFile", "cad2sl.log>");
 

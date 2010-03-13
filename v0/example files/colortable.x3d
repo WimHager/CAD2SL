@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D profile='Immersive' >
+<head>
+ <meta name='Vizthumbnail' content='Thumb_colortable_x3d1332811268494150.jpg'/>
+ <meta name='FluxStudioVersion' content='659'/>
+ <meta name='ExportTime' content='16:29:10'/>
+ <meta name='ExportDate' content='3/13/2010'/>
+ <meta name='FluxStudioVersion' content='659'/>
+</head>
+<Scene>
+<WorldInfo
+ title='Untitled'
+ info='"This Web3D Content was created with Flux Studio, a Web3D authoring tool"
+ "www.mediamachines.com"'/>
+<Group DEF='Import_Table'>
+ <Transform DEF='dad_Box1'
+  containerField='children'
+  translation='-4 0 -1.48714'>
+  <Shape DEF='Box1'
+   containerField='children'>
+   <Appearance
+    containerField='appearance'>
+    <Material DEF='White'
+     containerField='material'
+     ambientIntensity='0.200'
+     shininess='0.200'
+     diffuseColor='1 1 1'/>
+   </Appearance>
+   <Box DEF='GeoBox1'
+    containerField='geometry'
+    size='1 3 1'/>
+  </Shape>
+ </Transform>
+ <Transform DEF='dad_Box2'
+  containerField='children'
+  translation='-4 0 1.57866'>
+  <Shape DEF='Box2'
+   containerField='children'>
+   <Appearance
+    containerField='appearance'>
+    <Material DEF='Blue'
+     containerField='material'
+     ambientIntensity='0.200'
+     shininess='0.200'
+     diffuseColor='0 0 1'/>
+   </Appearance>
+   <Box DEF='GeoBox2'
+    containerField='geometry'
+    size='1 3 1'/>
+  </Shape>
+ </Transform>
+ <Transform DEF='dad_Box3'
+  containerField='children'
+  translation='4 0 1.5329'>
+  <Shape DEF='Box3'
+   containerField='children'>
+   <Appearance
+    containerField='appearance'>
+    <Material DEF='Green'
+     containerField='material'
+     ambientIntensity='0.200'
+     shininess='0.200'
+     diffuseColor='0 1 0'/>
+   </Appearance>
+   <Box DEF='GeoBox3'
+    containerField='geometry'
+    size='1 3 1'/>
+  </Shape>
+ </Transform>
+ <Transform DEF='dad_Box4'
+  containerField='children'
+  translation='4 0 -1.48714'>
+  <Shape DEF='Box4'
+   containerField='children'>
+   <Appearance
+    containerField='appearance'>
+    <Material DEF='Yellow'
+     containerField='material'
+     ambientIntensity='0.200'
+     shininess='0.200'
+     diffuseColor='1 1 0'/>
+   </Appearance>
+   <Box DEF='GeoBox4'
+    containerField='geometry'
+    size='1 3 1'/>
+  </Shape>
+ </Transform>
+ <Transform DEF='dad_Box5'
+  containerField='children'
+  translation='0 2 0'>
+  <Shape DEF='Box5'
+   containerField='children'>
+   <Appearance
+    containerField='appearance'>
+    <Material DEF='Red'
+     containerField='material'
+     ambientIntensity='0.200'
+     shininess='0.200'
+     diffuseColor='1 0 0'/>
+   </Appearance>
+   <Box DEF='GeoBox5'
+    containerField='geometry'
+    size='12 1 4.5'/>
+  </Shape>
+ </Transform>
+</Group>
+</Scene>
+</X3D>

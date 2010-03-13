@@ -13,24 +13,18 @@
 //    You should have received a copy of the GNU General Public License
 //    along with CAD2SL.  If not, see <http://www.gnu.org/licenses/>.
 
-//ToDo test with longer stream data
+string  Url= "http://path to server/cad2sl-bridge.php";
+float   UpdateTime= 2; //prim updates in Ses
+integer CommCh= -2010;
 
-
+string  ObjectName;
+integer PrimNr;
+integer ObjectPrims= 0;
 string  PrimKey;
-string  Url= "http://Path to cad2sl-bridge.php";
-float   UpdateTime= 2; //prim updates in Sec
 
-string  ObjectName= "4wall.prim";
-integer PrimNr= 0;
-
-string  DefaultKey= "00000000-0000-0000-0000-0000";
 list    PrimParmLst;
 list    PrevPrimParmLst;
 key     HttpRequestId;
-string  NoteName= "ObjectName";
-integer Line= 0;
-key     NoteQueryId; 
-string  OwnerName;
 vector  OrgPos;
 
 
@@ -69,7 +63,6 @@ list Deserialize(string Inp){
     return Pair;
 }
 
-
 string StrReplace(string Src, string From, string To) {//replaces all occurrences of 'from' with 'to' in 'src'.
     integer Len= (~-(llStringLength(From)));
     if(~Len) {
@@ -97,93 +90,60 @@ string PosCorrection(string Stream) { //Replaces Stream with Pos relative rezz p
     string PosStr= GetPosPartFromStream(Stream);
     vector CadPos= (vector)llGetSubString(PosStr,6,-1);
     vector NewPos= OrgPos+ CadPos; //add this to rezz Pos
-    string NewPosStr= "1=6|5="+(string)NewPos;
+    string NewPosStr= "1=6|5="+(string)NewPos+"|";
     string NewStream= StrReplace(Stream,PosStr,NewPosStr);
     //llOwnerSay(NewStream);
     return NewStream;
 }    
 
-ReadDefaultKey() {
-    string ParsStr= "key="+DefaultKey+"&func="+"GET";
-    HttpRequestId= llHTTPRequest(Url,[HTTP_METHOD, "POST",HTTP_MIMETYPE,"application/x-www-form-urlencoded"],ParsStr);
-}    
-
 default
 {
-    state_entry() {
-        OrgPos= llGetPos();
-        llSetText("Initialize...",<1,1,1>,1);
-        OwnerName= llKey2Name(llGetOwner());
-        while (llGetInventoryType(NoteName) == -1) {
-            llOwnerSay("Missing note CloneKey in contents of prim.");
-            llSleep(20);
-        }
-        NoteQueryId = llGetNotecardLine(NoteName, Line);
-        //ReadDefaultKey();
-        llSensorRepeat("", "", AGENT, 30.0, PI, UpdateTime);
-    }
 
     sensor(integer Ndetect) {
-        while (llGetInventoryType(NoteName) == -1) {
-            llOwnerSay("Missing note CloneKey in contents of prim.");
-            llSleep(20);
-        }
-        if (PrimKey == DefaultKey) {
-            ReadDefaultKey();       
-        }else{   
-            string ParsStr= "&name="+ObjectName+"&primnr="+(string)PrimNr;
-            HttpRequestId= llHTTPRequest(Url,[HTTP_METHOD, "POST",HTTP_MIMETYPE,"application/x-www-form-urlencoded"],ParsStr); 
-            PrimNr++;
-            if (PrimNr > 3) PrimNr= 0;
-        }    
+        string ParsStr= "&name="+ObjectName+"&primnr="+(string)PrimNr;
+        HttpRequestId= llHTTPRequest(Url,[HTTP_METHOD, "POST",HTTP_MIMETYPE,"application/x-www-form-urlencoded"],ParsStr); 
     }        
      
     http_response(key RequestId, integer Status, list MetaData, string Body) {
         if (RequestId == HttpRequestId) {
             if (Status == 200) {
-                string PrimData= llStringTrim(GetSubString(Body,"&data=" ,"&total"),STRING_TRIM);
-                string Hash=     llStringTrim(GetSubString(Body,"&md5=","&data="),STRING_TRIM);
+                string PrimData=      llStringTrim(GetSubString(Body,"&data=" ,"&total"),STRING_TRIM);
+                string Hash=          llStringTrim(GetSubString(Body,"&md5=","&data="),STRING_TRIM);
+                ObjectPrims= (integer)llStringTrim(GetSubString(Body,"&total=","EOL"),STRING_TRIM);
                 //llOwnerSay(PrimData);
                 if (Hash == llMD5String(PrimData,0)) { 
                     PrimData= PosCorrection(PrimData); //Add Pos to rezz point           
+                    //llOwnerSay(PrimData);
                     PrimParmLst= Deserialize(PrimData);
                     if (!ListCompare(PrimParmLst,PrevPrimParmLst)) {
                         //llOwnerSay("Master Prim Data Changed.");
                         llSetPrimitiveParams(PrimParmLst); 
                         PrevPrimParmLst= PrimParmLst;
                         llSetText("",<0,0,0>,0);
+                        llSensorRemove();
                     }
                     }else{ llOwnerSay("Received Data is corrupted!!! "+Hash+" "+llMD5String(PrimData,0)); }    
             }else{ llSetText("Server error: "+(string)Status,<1,1,1>,1); }  
         } 
     }
     
-   dataserver(key QueryId, string Data) {
-        if (QueryId == NoteQueryId) {
-            if (Data != EOF) { 
-                PrimKey= llStringTrim(Data,STRING_TRIM);
-                if (PrimKey==DefaultKey) {
-                    llOwnerSay("Please, Edit note CloneKey with Master KEY.");
-                    return;                                    
-                }    
-                llOwnerSay("Using Key: "+Data);
-                llSetObjectDesc(PrimKey);
-                ++Line;
-                NoteQueryId= llGetNotecardLine(NoteName, Line);
-            }
-        }
-    }
-    
-    changed(integer Change) {
-        if ( Change & CHANGED_INVENTORY) {
-            llOwnerSay("Reading CloneKey");
-            if (llGetInventoryType("CloneKey") ==  -1) {
-                llOwnerSay("Missing note CloneKey in contents of prim.");
-            }else{
-                NoteQueryId = llGetNotecardLine(NoteName, Line);
+    listen( integer Ch, string Name, key ID, string Msg) {
+        if ( Ch == CommCh ) {
+            if ( Msg == "Kill" ) { llSay(0,"Outch prim "+(string)PrimNr+" is killed"); llDie(); }
+            if ( llSubStringIndex(Msg,"prim") != -1 ) { //Msg contains prim name
+                ObjectName= Msg;
+                llSensorRepeat("", "", AGENT, 30.0, PI, UpdateTime); 
             }    
-        }   
-    }    
+        }    
+    }   
+    
+    on_rez(integer StartParm) {
+        PrimNr= StartParm;
+        OrgPos= llGetPos();
+        llSetPrimitiveParams([PRIM_SIZE, <0.1,0.1,0.1>]);
+        llSetText("Initialize...",<1,1,1>,1);
+        llListen(CommCh,"",NULL_KEY, "");
+    }                                            
 
 }        
         
