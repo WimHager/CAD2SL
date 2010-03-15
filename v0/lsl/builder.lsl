@@ -14,6 +14,7 @@
 //    along with CAD2SL.  If not, see <http://www.gnu.org/licenses/>.
 
 string  Url= "http://path to server/cad2sl-bridge.php";
+
 float   UpdateTime= 2; //prim updates in Ses
 integer CommCh= -2010;
 
@@ -99,7 +100,7 @@ string PosCorrection(string Stream) { //Replaces Stream with Pos relative rezz p
 default
 {
 
-    sensor(integer Ndetect) {
+    timer() {
         string ParsStr= "&name="+ObjectName+"&primnr="+(string)PrimNr;
         HttpRequestId= llHTTPRequest(Url,[HTTP_METHOD, "POST",HTTP_MIMETYPE,"application/x-www-form-urlencoded"],ParsStr); 
     }        
@@ -113,14 +114,14 @@ default
                 //llOwnerSay(PrimData);
                 if (Hash == llMD5String(PrimData,0)) { 
                     PrimData= PosCorrection(PrimData); //Add Pos to rezz point           
-                    //llOwnerSay(PrimData);
+                    llOwnerSay(PrimData);
                     PrimParmLst= Deserialize(PrimData);
                     if (!ListCompare(PrimParmLst,PrevPrimParmLst)) {
                         //llOwnerSay("Master Prim Data Changed.");
                         llSetPrimitiveParams(PrimParmLst); 
                         PrevPrimParmLst= PrimParmLst;
                         llSetText("",<0,0,0>,0);
-                        llSensorRemove();
+                        llSetTimerEvent(0); //Stop updating
                     }
                     }else{ llOwnerSay("Received Data is corrupted!!! "+Hash+" "+llMD5String(PrimData,0)); }    
             }else{ llSetText("Server error: "+(string)Status,<1,1,1>,1); }  
@@ -132,7 +133,7 @@ default
             if ( Msg == "Kill" ) { llSay(0,"Outch prim "+(string)PrimNr+" is killed"); llDie(); }
             if ( llSubStringIndex(Msg,"prim") != -1 ) { //Msg contains prim name
                 ObjectName= Msg;
-                llSensorRepeat("", "", AGENT, 30.0, PI, UpdateTime); 
+                llSetTimerEvent(UpdateTime); 
             }    
         }    
     }   

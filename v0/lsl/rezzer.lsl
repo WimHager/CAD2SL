@@ -13,20 +13,34 @@
 //    You should have received a copy of the GNU General Public License
 //    along with CAD2SL.  If not, see <http://www.gnu.org/licenses/>.
 
-string  ObjectName= "4wall.prim";
+//ToDo first get prim count.
+string  Url= "http://to your/cad2sl-bridge.php";
+string  ObjectName;
+integer ObjectPrims;
 integer CommCh= -2010;
-
+key     HttpRequestId;
 integer Counter;
+
+string GetSubString(string String, string StartStr, string EndStr) { // Use EOL for End Of line
+    integer Start= llSubStringIndex(String, StartStr)+llStringLength(StartStr);
+    integer End=   llSubStringIndex(String, EndStr)-1;
+    if (EndStr=="EOL") End= -1;
+    return llGetSubString(String,Start,End);    
+}   
 
 default
 {
     state_entry() {
-        llSetTimerEvent(2);
+        llSay(CommCh,"Kill"); // Lets Kill them first
     }
      
     touch_start(integer NDetect) {
         llSay(CommCh,"Kill");
-        llResetScript();
+        ObjectName= llGetObjectDesc();
+        Counter= 0;
+        string ParsStr= "&name="+ObjectName+"&primnr=0"; //Get Object Prims
+        HttpRequestId= llHTTPRequest(Url,[HTTP_METHOD, "POST",HTTP_MIMETYPE,"application/x-www-form-urlencoded"],ParsStr);         
+        llSetTimerEvent(2);
     }
 
     timer() {
@@ -34,6 +48,16 @@ default
         llSleep(0.3); //Wait for Rezz        
         llSay(CommCh,ObjectName);        
         Counter++;
-        if (Counter == 4) llSetTimerEvent(0);
+        if (Counter >= ObjectPrims) llSetTimerEvent(0);
     }
+     
+    http_response(key RequestId, integer Status, list MetaData, string Body) {
+        if (RequestId == HttpRequestId) {
+            if (Status == 200) {
+                ObjectPrims= (integer)llStringTrim(GetSubString(Body,"&total=","EOL"),STRING_TRIM);
+                llSay(0,"Object has: "+(string)ObjectPrims+" prims");
+            }    
+        } 
+    }
+    
 }
