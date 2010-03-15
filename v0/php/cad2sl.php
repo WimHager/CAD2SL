@@ -1,16 +1,11 @@
 <h3>x3d upload interface for CAD2SL</h3>
 
 <?php 
-//Edit this part to your needs========================================== 
- 
-$location=  "uploads/";			//Upload directory, must have write rights
-$allowed=   array ("x3d", "X3D"); 	// Allowed extensions
-$max_size=  1500;			//Max. File size in bytes /1024 = kb /1024 = mb
-$youresite= "http://yoursite.com/"; 	// Must end with trailing slash.
-$fileperm=  0444;
- 
-//End of part===========================================================
- 
+
+include 'cad2sl-const.php';
+include 'cad2sl-lib.php';
+include 'cad2sl-conv.php';
+
 if(isset($_POST['upload'])) 
 {
 	if(is_uploaded_file($_FILES['file']['tmp_name'])) 
