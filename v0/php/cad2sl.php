@@ -10,45 +10,36 @@ if(isset($_POST['upload']))
 {
 	if(is_uploaded_file($_FILES['file']['tmp_name'])) 
 	{
-		$extention_file = pathinfo($_FILES['file']['name']);
-        	$extention_file = $extention_file[extension];
+		$ExtentionFile= pathinfo($_FILES['file']['name']);
+        	$ExtentionFile= $ExtentionFile[extension];
 
- 		$extentions_allowed = explode(", ", $allowed);
+ 		$ExtentionsAllowed= explode(", ", $Allowed);
  	
-		$ok = in_array($extention_file, $allowed);
+		$Ok= in_array($ExtentionFile, $Allowed);
  	
-		if($ok == 1)
-		{		
-			if($_FILES['file']['size'] > $max_size)
-			{
-				echo "File is too big, Max. file size is: <b>".$max_size."</b>";
+		if($Ok == 1) {		
+			if($_FILES['file']['size'] > $MaxSize)	{
+				echo "File is too big, Max. file size is: <b>".$MaxSize."</b>";
 				exit;
 			}
 		
-			if(!move_uploaded_file($_FILES['file']['tmp_name'],$location.$_FILES['file']['name'])) 
-			{
+			if(!move_uploaded_file($_FILES['file']['tmp_name'],$Location.$_FILES['file']['name'])) {
 				echo "File cannot be placed";
 				exit;
 			}
 
-			chmod($location . $_FILES['file']['name'], $fileperm);
+			chmod($Location . $_FILES['file']['name'], $FilePerm);
 			echo "File: ".$_FILES['file']['name']." is uploaded<br />";				
-		}
-		else
-		{
+		}else{
 			echo "Wrong extention, allowd extentions are:<b>";
 
-			for ( $i = 0; $i < count($allowed); $i ++) 
-			{
-				echo " ." . $allowed[$i];
+			for ( $I = 0; $I < count($Allowed); $I ++) {
+				echo " ." . $Allowed[$I];
 			}
 			
 			echo "</b>";
 		}
-	}
-
-	else
-	{
+	}else{
 		echo "Upload has failed!!!";
 	}
 }
