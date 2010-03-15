@@ -104,11 +104,12 @@ function GetBoxes($FileName) {
 			$Rot= explode(" ",$Rot);  //Make it XYZ
 
 			// Check if Rotation is in file else set defaults
-			if(count($Rot) == 3) $BoxArr[$ObjC]["Rot"]= $Rot;
+			if(count($Rot) == 4) $BoxArr[$ObjC]["Rot"]= $Rot;
 			else{ 
 				$BoxArr[$ObjC]["Rot"][0]= 0;
 				$BoxArr[$ObjC]["Rot"][1]= 0;
 				$BoxArr[$ObjC]["Rot"][2]= 0;
+				$BoxArr[$ObjC]["Rot"][3]= 0;
 			}
 
 			foreach ($Transform->Shape as $Shape) {
@@ -134,7 +135,7 @@ function GetBoxes($FileName) {
 			$ObjC++;
 		}
 	}
-	//print_r($BoxArr);
+	print_r($BoxArr);
 	return $BoxArr;
 }
 
