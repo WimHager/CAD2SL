@@ -159,7 +159,8 @@ function ConvInputFileToOutputStr($FileN) {
 	$PrimParmStr= "";
 	foreach ($BoxArr as $Parts) {
 		$PrimParmStr=  AddBlockSize($BoxArr[$i]["Size"][0], $BoxArr[$i]["Size"][1], $BoxArr[$i]["Size"][2])."|"; //Size
-		$PrimParmStr.= AddBlockPos ($BoxArr[$i]["Pos" ][0], $BoxArr[$i]["Pos" ][1], $BoxArr[$i]["Pos" ][2])."|"; //Pos
+		$PrimParmStr.= AddBlockPos ($BoxArr[$i]["Pos"][0], $BoxArr[$i]["Pos"][1], $BoxArr[$i]["Pos"][2])."|";    //Pos
+		//$PrimParmStr.= AddBlockRot ($BoxArr[$i]["Rot"][0], $BoxArr[$i]["Rot"][1], $BoxArr[$i]["Rot"][2], $BoxArr[$i]["Rot"][3])."|"; //Rot
 		$PrimParmStr.= AddBlockCol ($BoxArr[$i]["Color"]);  //Color
 		$PrimParmStr= CountParms($PrimParmStr)."|".$PrimParmStr; // add objects count at begin
 		$ObjStr.= $PrimParmStr."\n";
