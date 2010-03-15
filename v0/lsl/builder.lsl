@@ -22,10 +22,12 @@ string  ObjectName;
 integer PrimNr;
 integer ObjectPrims= 0;
 string  PrimKey;
+integer PrimRezzed;
 
 list    PrimParmLst;
 list    PrevPrimParmLst;
 key     HttpRequestId;
+integer ListenHandle;
 vector  OrgPos;
 
 
@@ -133,7 +135,8 @@ default
             if ( Msg == "Kill" ) { llSay(0,"Outch prim "+(string)PrimNr+" is killed"); llDie(); }
             if ( llSubStringIndex(Msg,"prim") != -1 ) { //Msg contains prim name
                 ObjectName= Msg;
-                llSetTimerEvent(UpdateTime); 
+                if (!PrimRezzed) llSetTimerEvent(UpdateTime); 
+                PrimRezzed= TRUE;
             }    
         }    
     }   
@@ -141,9 +144,10 @@ default
     on_rez(integer StartParm) {
         PrimNr= StartParm;
         OrgPos= llGetPos();
+        PrimRezzed= FALSE;  //Ugly need a redo !!!
         llSetPrimitiveParams([PRIM_SIZE, <0.1,0.1,0.1>]);
         llSetText("Initialize...",<1,1,1>,1);
-        llListen(CommCh,"",NULL_KEY, "");
+        ListenHandle= llListen(CommCh,"",NULL_KEY, "");
     }                                            
 
 }        
