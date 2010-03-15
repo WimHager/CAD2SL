@@ -16,15 +16,15 @@
     along with CAD2SL.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+$Debug= TRUE;
+
 $location=  "uploads/";			//Upload directory, must have write rights
 $allowed=   array ("x3d", "X3D"); 	//Allowed extensions for upload
 $max_size=  1500;			//Max. File size in bytes /1024 = kb /1024 = mb
 $youresite= "http://yoursite.com/"; 	//Must end with trailing slash.
 $fileperm=  0444;
 $OutputExt= "prim";			//Converted data extension
- 
-
-define("LogFile", "cad2sl.log>");
+$LogFile=   "cad2sl.log";		//Name of debug log file	
 
 //Color table
 $Colors["Red"]=		"<1.00000,0.00000,0.00000>";

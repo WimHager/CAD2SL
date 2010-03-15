@@ -20,10 +20,12 @@
 
 // FUNCTIONS BLOCK=========================================================
 
-function write_log($FileName, $Message) {
-    $fp= fopen($FileName, "a+");
-    fwrite($fp, date("[Y/m/d-H:i:s];").$Message."\n");
-    fclose($fp);
+function WriteLog($Message) {
+    if ($GLOBALS['Debug']) {
+    	$Fp= fopen($GLOBALS['LogFile'], "a+");
+    	fwrite($Fp, date("[Y/m/d-H:i:s];").$Message."\n");
+    	fclose($Fp);
+    }	
 }
 
 function CountParms($Str) {
@@ -94,6 +96,7 @@ function GetBoxes($FileName) {
 	$BoxArr= array();
 	$ObjC= 0;
 	$X3Data= simplexml_load_file($FileName);
+	WriteLog("X3Data arr: ".print_r($X3Data,true));
 	foreach ($X3Data->Scene as $Scene) {
 		foreach ($Scene->Transform as $Transform) {
 			$Pos= (string)$Transform[translation]; //Get Object Pos
@@ -135,7 +138,7 @@ function GetBoxes($FileName) {
 			$ObjC++;
 		}
 	}
-	print_r($BoxArr);
+	WriteLog("Box arr: ".print_r($BoxArr,true));
 	return $BoxArr;
 }
 
@@ -166,6 +169,7 @@ function ConvInputFileToOutputStr($FileN) {
 		$ObjStr.= $PrimParmStr."\n";
 		$i++;
 	}
+	WriteLog("LSL data: ".$ObjStr);
 	return $ObjStr;
 
 }
