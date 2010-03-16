@@ -185,8 +185,14 @@ function ConvInputFileToOutputStr($FileN) {
 	$i= 0;
 	$PrimParmStr= "";
 	foreach ($ShapeArr as $Parts) {
-		$PrimParmStr=  AddPrimType (0)."|"; //BOX
-		$PrimParmStr.= AddBlockSize($ShapeArr[$i]["Size"][0], $ShapeArr[$i]["Size"][1], $ShapeArr[$i]["Size"][2])."|"; //Size
+		if ($ShapeArr[$i]["Shape"] == "Box") {
+			$PrimParmStr=  AddPrimType (0)."|"; //BOX
+			$PrimParmStr.= AddBlockSize($ShapeArr[$i]["Size"][0], $ShapeArr[$i]["Size"][1], $ShapeArr[$i]["Size"][2])."|"; //Size
+		}
+		if ($ShapeArr[$i]["Shape"] == "Sphere") {
+			$PrimParmStr=  AddPrimType (3)."|"; //SPHERE
+			$PrimParmStr.= AddBlockSize($ShapeArr[$i]["Radius"][0], $ShapeArr[$i]["Radius"][0], $ShapeArr[$i]["Radius"][0])."|"; //Radius
+		}
 		$PrimParmStr.= AddBlockPos ($ShapeArr[$i]["Pos"][0], $ShapeArr[$i]["Pos"][1], $ShapeArr[$i]["Pos"][2])."|";    //Pos
 		$PrimParmStr.= AddBlockCol ($ShapeArr[$i]["Color"])."|";  //Color
 		$PrimParmStr.= AddBlockRot ($ShapeArr[$i]["Rot"][0], $ShapeArr[$i]["Rot"][1], $ShapeArr[$i]["Rot"][2], $ShapeArr[$i]["Rot"][3]); //Rot
@@ -194,7 +200,7 @@ function ConvInputFileToOutputStr($FileN) {
 		$ObjStr.= $PrimParmStr."\n";
 		$i++;
 	}
-	WriteLog("LSL data: ".$ObjStr);
+	WriteLog("LSL data: \n".$ObjStr);
 	return $ObjStr;
 
 }
