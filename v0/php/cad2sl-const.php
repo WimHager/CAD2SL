@@ -17,6 +17,7 @@
 */
 
 $Debug= TRUE;
+$DebugLevel= 2;				//1 Only Output, 2 With Array Reads
 
 $Location=  "uploads/";			//Upload directory, must have write rights
 $Allowed=   array ("x3d", "X3D"); 	//Allowed extensions for upload
