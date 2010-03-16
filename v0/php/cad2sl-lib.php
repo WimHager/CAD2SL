@@ -90,6 +90,17 @@ function AddPhysical($Enable) {
 }
 // ------------------------------------------------------------------------
 
+// SetPrimType-------------------------------------------------------------
+// 0 PRIM_TYPE_BOX 1 PRIM_TYPE_CYLINDER 2 PRIM_TYPE_PRISM 3 PRIM_TYPE_SPHERE
+// ToDo Construct SPHERE different!!!
+
+function AddPrimType($Type) {
+	return	"1=9|1=."$Type.
+		"|1=0|5=<0.000000, 1.000000, 0.000000>|2=0.000000|5=<0.000000, 0.000000, 0.000000>|5=<1.000000, 1.000000, 0.000000>|5=<0.000000, 0.000000, 0.000000>";
+
+}
+// ------------------------------------------------------------------------
+
 // Get AllBoxes from X3D---------------------------------------------------
 // Todo: make init array with defaults.
 function GetBoxes($FileName) {
