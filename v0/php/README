@@ -10,6 +10,10 @@ cad2sl-bridge   Communication module to SL
 
 
 ToDo:
-Slave Prim need a redo on collecting data. we will call it CAD2SL slave.
-Rezzing the slave with a param for it's number. Need to be done from same startpoint.
+Adding scale to XML readings and calculate size
+Rotation testing inworld, something weird with s vector
+Just added Sphere testing.
+First steps to make it open from Web.
+
+
 
