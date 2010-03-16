@@ -29,20 +29,21 @@ $LogFile=   "cad2sl.log";		//Name of debug log file
 $Colors["Red"]=		"<1.00000,0.00000,0.00000>";
 $Colors["Green"]=	"<0.00000,1.00000,0.00000>";
 $Colors["Blue"]=	"<0.00000,0.00000,1.00000>";
-$Colors["Purple"]=	"<1.00000,0.00000,1.00000>";
 $Colors["Yellow"]=	"<1.00000,1.00000,0.00000>";
+$Colors["Cyan"]=	"<0.00000,1.00000,1.00000>";
+$Colors["Purple"]=	"<1.00000,0.00000,1.00000>";
+$Colors["Rust"]=	"<0.40000,0.20000,0.00000>";
 $Colors["Black"]=	"<0.00000,0.00000,0.00000>";
 $Colors["White"]=	"<1.00000,1.00000,1.00000>";
-$Colors["Rust"]=	"<0.40000,0.20000,0.00000>";
 $Colors["Shiny_Red"]=	"<1.00000,0.00000,0.00000>"; // Shiny for now!! need with extra params
 $Colors["Shiny_Green"]=	"<0.00000,1.00000,0.00000>";
 $Colors["Shiny_Blue"]=	"<0.00000,0.00000,1.00000>";
-$Colors["Shiny_Purple"]="<0.00000,1.00000,1.00000>";
 $Colors["Shiny_Yellow"]="<1.00000,1.00000,0.00000>";
+$Colors["Shiny_Cyan"]=	"<0.00000,1.00000,1.00000>";
+$Colors["Shiny_Purple"]="<0.00000,1.00000,1.00000>";
+$Colors["Shiny_Rust"]=	"<0.40000,0.20000,0.00000>";
 $Colors["Shiny_Black"]=	"<0.00000,0.00000,0.00000>";
 $Colors["Shiny_White"]=	"<1.00000,1.00000,1.00000>";
-$Colors["Shiny_Rust"]=	"<0.40000,0.20000,0.00000>";
-
 $Colors["None"]=	"<1.00000,1.00000,1.00000>";
 
 ?>
