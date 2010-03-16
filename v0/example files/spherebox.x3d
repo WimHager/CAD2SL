@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D profile='Immersive' >
+<head>
+ <meta name='Vizthumbnail' content='Thumb_spherebox_x3d632801268745972.jpg'/>
+ <meta name='ExportTime' content='14:26:12'/>
+ <meta name='ExportDate' content='3/16/2010'/>
+ <meta name='VivatyStudioVersion' content='738'/>
+ <meta name='VivatyStudioSource' content='untitled2.fxw'/>
+</head>
+<Scene>
+<WorldInfo
+ title='Untitled2'
+ info='"This Web3D Content was created with Vivaty Studio, a Web3D authoring tool"
+ "www.mediamachines.com"'/>
+<Transform DEF='dad_Sphere1'
+ translation='-1.21259 0 .91516'>
+ <Shape DEF='Sphere1'
+  containerField='children'>
+  <Appearance
+   containerField='appearance'>
+   <Material DEF='Red'
+    containerField='material'
+    ambientIntensity='.2'
+    shininess='.2'
+    diffuseColor='1 0 0'/>
+  </Appearance>
+  <Sphere DEF='GeoSphere1'
+   containerField='geometry'
+   radius='1'/>
+ </Shape>
+</Transform>
+<Transform DEF='dad_Box1'
+ translation='1.48714 0 .86941'>
+ <Shape DEF='Box1'
+  containerField='children'>
+  <Appearance
+   containerField='appearance'>
+   <Material
+    containerField='material'
+    USE='Red'/>
+  </Appearance>
+  <Box DEF='GeoBox1'
+   containerField='geometry'
+   size='1 1 1'/>
+ </Shape>
+</Transform>
+</Scene>
+</X3D>

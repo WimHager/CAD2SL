@@ -104,10 +104,10 @@ function AddPrimType($Type) {
 }
 // ------------------------------------------------------------------------
 
-// Get AllBoxes from X3D---------------------------------------------------
+// Get AllShapes from X3D---------------------------------------------------
 // Todo: make init array with defaults.
-function GetBoxes($FileName) {
-	$BoxArr= array();
+function GetShapes($FileName) {
+	$ShapeArr= array();
 	$ObjC= 0;
 	$X3Data= simplexml_load_file($FileName);
 	if ($GLOBALS['DebugLevel'] == 2) WriteLog("X3Data arr: ".print_r($X3Data,true));
@@ -115,21 +115,22 @@ function GetBoxes($FileName) {
 		foreach ($Scene->Transform as $Transform) {
 			$Pos= (string)$Transform[translation]; //Get Object Pos
 			$Pos= explode(" ",$Pos); //Make it XYZ
-			$BoxArr[$ObjC]["Pos"]= $Pos;
+			$ShapeArr[$ObjC]["Pos"]= $Pos;
 
 			$Rot= (string)$Transform[rotation];  //Get Oject Rotation
 			$Rot= explode(" ",$Rot);  //Make it XYZ
 
 			// Check if Rotation is in file else set defaults
-			if(count($Rot) == 4) $BoxArr[$ObjC]["Rot"]= $Rot;
+			if(count($Rot) == 4) $ShapeArr[$ObjC]["Rot"]= $Rot;
 			else{ 
-				$BoxArr[$ObjC]["Rot"][0]= 0;
-				$BoxArr[$ObjC]["Rot"][1]= 0;
-				$BoxArr[$ObjC]["Rot"][2]= 0;
-				$BoxArr[$ObjC]["Rot"][3]= 0;
+				$ShapeArr[$ObjC]["Rot"][0]= 0;
+				$ShapeArr[$ObjC]["Rot"][1]= 0;
+				$ShapeArr[$ObjC]["Rot"][2]= 0;
+				$ShapeArr[$ObjC]["Rot"][3]= 0;
 			}
 
 			foreach ($Transform->Shape as $Shape) {
+
 				foreach ($Shape->Appearance as $Appearance) {
 					foreach ($Appearance->Material as $Material) {
 						$Attributes= get_object_vars($Material);
@@ -138,22 +139,31 @@ function GetBoxes($FileName) {
 						$Color= (string)$Attributes["@attributes"]["DEF"];
 						if (empty($Color)) $Color= (string)$Attributes["@attributes"]["USE"];
 
-						if (empty($Color)) $BoxArr[$ObjC]["Color"]= "None";
-						else $BoxArr[$ObjC]["Color"]= $Color; //Get Object Color
+						if (empty($Color)) $ShapeArr[$ObjC]["Color"]= "None";
+						else $ShapeArr[$ObjC]["Color"]= $Color; //Get Object Color
 					}	
 				}
 				foreach ($Shape->Box as $Box) {
+					$ShapeArr[$ObjC]["Shape"]= "Box";
 					$Attributes= get_object_vars($Box); //Get Object Size
 					$Size= (string)$Attributes["@attributes"]["size"];
 					$Size= explode(" ",$Size);  //Make it XYZ
-					$BoxArr[$ObjC]["Size"]= $Size; 
+					$ShapeArr[$ObjC]["Size"]= $Size; 
+				}
+
+				foreach ($Shape->Sphere as $Sphere) {
+					$ShapeArr[$ObjC]["Shape"]= "Sphere";
+					$Attributes= get_object_vars($Sphere); //Get Object Radius
+					$Radius= (string)$Attributes["@attributes"]["radius"];
+					$Radius= explode(" ",$Radius);  //Make it XYZ
+					$ShapeArr[$ObjC]["Radius"]= $Radius; 
 				}
 			}
 			$ObjC++;
 		}
 	}
-	if ($GLOBALS['DebugLevel'] == 2) WriteLog("Box arr: ".print_r($BoxArr,true));
-	return $BoxArr;
+	if ($GLOBALS['DebugLevel'] == 2) WriteLog("Box arr: ".print_r($ShapeArr,true));
+	return $ShapeArr;
 }
 
 function ConvInputFileToOutputStr($FileN) {
@@ -171,15 +181,15 @@ function ConvInputFileToOutputStr($FileN) {
 	//$PrimParmStr= CountParms($PrimParmStr)."|".$PrimParmStr; // add objects counter at begin
 
 
-	$BoxArr= GetBoxes($FileN); //Get all Box types from File
+	$ShapeArr= GetShapes($FileN); //Get all Shape types from File
 	$i= 0;
 	$PrimParmStr= "";
-	foreach ($BoxArr as $Parts) {
+	foreach ($ShapeArr as $Parts) {
 		$PrimParmStr=  AddPrimType (0)."|"; //BOX
-		$PrimParmStr.= AddBlockSize($BoxArr[$i]["Size"][0], $BoxArr[$i]["Size"][1], $BoxArr[$i]["Size"][2])."|"; //Size
-		$PrimParmStr.= AddBlockPos ($BoxArr[$i]["Pos"][0], $BoxArr[$i]["Pos"][1], $BoxArr[$i]["Pos"][2])."|";    //Pos
-		$PrimParmStr.= AddBlockCol ($BoxArr[$i]["Color"])."|";  //Color
-		$PrimParmStr.= AddBlockRot ($BoxArr[$i]["Rot"][0], $BoxArr[$i]["Rot"][1], $BoxArr[$i]["Rot"][2], $BoxArr[$i]["Rot"][3]); //Rot
+		$PrimParmStr.= AddBlockSize($ShapeArr[$i]["Size"][0], $ShapeArr[$i]["Size"][1], $ShapeArr[$i]["Size"][2])."|"; //Size
+		$PrimParmStr.= AddBlockPos ($ShapeArr[$i]["Pos"][0], $ShapeArr[$i]["Pos"][1], $ShapeArr[$i]["Pos"][2])."|";    //Pos
+		$PrimParmStr.= AddBlockCol ($ShapeArr[$i]["Color"])."|";  //Color
+		$PrimParmStr.= AddBlockRot ($ShapeArr[$i]["Rot"][0], $ShapeArr[$i]["Rot"][1], $ShapeArr[$i]["Rot"][2], $ShapeArr[$i]["Rot"][3]); //Rot
 		$PrimParmStr= CountParms($PrimParmStr)."|".$PrimParmStr; // add objects count at begin
 		$ObjStr.= $PrimParmStr."\n";
 		$i++;
