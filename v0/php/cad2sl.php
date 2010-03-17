@@ -22,49 +22,50 @@
 include 'cad2sl-const.php';
 include 'cad2sl-lib.php';
 
-if(isset($_POST['upload'])) 
-{
-	if(is_uploaded_file($_FILES['file']['tmp_name'])) 
-	{
-		$ExtentionFile= pathinfo($_FILES['file']['name']);
-        	$ExtentionFile= $ExtentionFile[extension];
+if($_SERVER['HTTP_HOST']) { //Are we started from prompt or web.
 
- 		$ExtentionsAllowed= explode(", ", $Allowed);
+	if(isset($_POST['upload'])) {
+		if(is_uploaded_file($_FILES['file']['tmp_name'])) {
+			$ExtentionFile= pathinfo($_FILES['file']['name']);
+       	 		$ExtentionFile= $ExtentionFile[extension];
+
+ 			$ExtentionsAllowed= explode(", ", $Allowed);
  	
-		$Ok= in_array($ExtentionFile, $Allowed);
+			$Ok= in_array($ExtentionFile, $Allowed);
  	
-		if($Ok == 1) {		
-			if($_FILES['file']['size'] > $MaxSize)	{
-				echo "File is too big, Max. file size is: <b>".$MaxSize."</b>";
-				exit;
-			}
+			if($Ok == 1) {		
+				if($_FILES['file']['size'] > $MaxSize)	{
+					echo "File is too big, Max. file size is: <b>".$MaxSize."</b>";
+					exit;
+				}
 		
-			if(!move_uploaded_file($_FILES['file']['tmp_name'],$Location.$_FILES['file']['name'])) {
-				echo "File cannot be placed";
-				exit;
-			}
+				if(!move_uploaded_file($_FILES['file']['tmp_name'],$Location.$_FILES['file']['name'])) {
+					echo "File cannot be placed";
+					exit;
+				}
 
-			chmod($Location . $_FILES['file']['name'], $FilePerm);
+				chmod($Location . $_FILES['file']['name'], $FilePerm);
 
-			//Start to convert the file and write a converted file.
-			$InF = 	$Location.$_FILES['file']['name'];
-			$OutF =	preg_replace('/\..+$/', '.' . $GLOBALS['OutputExt'], $InF);
+				//Start to convert the file and write a converted file.
+				$InF = 	$Location.$_FILES['file']['name'];
+				$OutF =	preg_replace('/\..+$/', '.' . $GLOBALS['OutputExt'], $InF);
 
-			WriteData(ConvInputFileToOutputStr($InF), $OutF);
+				WriteData(ConvInputFileToOutputStr($InF), $OutF);
 
-			echo "File: ".$Location.$_FILES['file']['name']." is uploaded & converted.<br />";
+				echo "File: ".$Location.$_FILES['file']['name']." is uploaded & converted.<br />";
 		
-		}else{
-			echo "Wrong extention, allowd extentions are:<b>";
+			}else{
+				echo "Wrong extention, allowd extentions are:<b>";
 
-			for ( $I = 0; $I < count($Allowed); $I ++) {
-				echo " ." . $Allowed[$I];
-			}
+				for ( $I = 0; $I < count($Allowed); $I ++) {
+					echo " ." . $Allowed[$I];
+				}
 			
-			echo "</b>";
+				echo "</b>";
+			}
+		}else{
+			echo "Upload has failed!!!";
 		}
-	}else{
-		echo "Upload has failed!!!";
 	}
 }
 ?>
