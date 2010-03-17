@@ -2,8 +2,8 @@
 <!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
 <X3D profile='Immersive' >
 <head>
- <meta name='Vizthumbnail' content='Thumb_all_x3d689371268818434.jpg'/>
- <meta name='ExportTime' content='10:33:54'/>
+ <meta name='Vizthumbnail' content='Thumb_all_x3d53424061268823707.jpg'/>
+ <meta name='ExportTime' content='12: 1:47'/>
  <meta name='ExportDate' content='3/17/2010'/>
  <meta name='FluxStudioVersion' content='659'/>
 </head>
@@ -13,7 +13,7 @@
  info='"This Web3D Content was created with Flux Studio, a Web3D authoring tool"
  "www.mediamachines.com"'/>
 <Transform DEF='dad_Box1'
- translation='-1.6473 0 -1.25835'>
+ translation='-2.19639 0 -1.30411'>
  <Shape DEF='Box1'
   containerField='children'>
   <Appearance
@@ -30,7 +30,7 @@
  </Shape>
 </Transform>
 <Transform DEF='dad_Cylinder1'
- translation='1.18971 0 -1.25835'>
+ translation='2.33367 0 -1.16683'>
  <Shape DEF='Cylinder1'
   containerField='children'>
   <Appearance
@@ -47,9 +47,9 @@
    radius='1.000'/>
  </Shape>
 </Transform>
-<Transform DEF='dad_Sphere1'
- translation='-1.69305 0 1.21259'>
- <Shape DEF='Sphere1'
+<Transform DEF='dad_Cone1'
+ translation='-1.87609 0 2.21927'>
+ <Shape DEF='Cone1'
   containerField='children'>
   <Appearance
    containerField='appearance'>
@@ -58,6 +58,24 @@
     ambientIntensity='0.200'
     shininess='0.200'
     diffuseColor='0 0 1'/>
+  </Appearance>
+  <Cone DEF='GeoCone1'
+   containerField='geometry'
+   height='2.000'
+   bottomRadius='1.000'/>
+ </Shape>
+</Transform>
+<Transform DEF='dad_Sphere1'
+ translation='2.33367 0 2.03624'>
+ <Shape DEF='Sphere1'
+  containerField='children'>
+  <Appearance
+   containerField='appearance'>
+   <Material DEF='Yellow'
+    containerField='material'
+    ambientIntensity='0.200'
+    shininess='0.200'
+    diffuseColor='1 1 0'/>
   </Appearance>
   <Sphere DEF='GeoSphere1'
    containerField='geometry'
