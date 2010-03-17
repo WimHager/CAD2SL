@@ -218,7 +218,7 @@ function ConvInputFileToOutputStr($FileN) {
 			$PrimParmStr=  AddPrimType (2)."|"; //CONE Be aware this is not a LSL Type !!!! due to fact that cone is a cylinder with X taper
 			$PrimParmStr.= AddBlockSize($ShapeArr[$i]["Radius"][0]*2, $ShapeArr[$i]["Radius"][0]*2, $ShapeArr[$i]["Height"][0])."|"; //Radius&Height
 		}
-		$PrimParmStr.= AddBlockPos ($ShapeArr[$i]["Pos"][0], $ShapeArr[$i]["Pos"][2], $ShapeArr[$i]["Pos"][1])."|";    //Pos
+		$PrimParmStr.= AddBlockPos ($ShapeArr[$i]["Pos"][0], $ShapeArr[$i]["Pos"][1], $ShapeArr[$i]["Pos"][2])."|";    //Pos
 		$PrimParmStr.= AddBlockCol ($ShapeArr[$i]["Color"])."|";  //Color
 		$PrimParmStr.= AddBlockRot ($ShapeArr[$i]["Rot"][0], $ShapeArr[$i]["Rot"][1], $ShapeArr[$i]["Rot"][2], $ShapeArr[$i]["Rot"][3]); //Rot
 		$PrimParmStr= CountParms($PrimParmStr)."|".$PrimParmStr; // add objects count at begin
