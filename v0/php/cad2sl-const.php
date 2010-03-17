@@ -19,9 +19,9 @@
 $Debug= TRUE;
 $DebugLevel= 2;				//1 Only Output, 2 With Array Reads
 
-$Location=  "uploads/";			//Upload directory, must have write rights
+$Location=  "";			//Upload directory, must have write rights
 $Allowed=   array ("x3d", "X3D"); 	//Allowed extensions for upload
-$MaxSize=   1500;			//Max. File size in bytes /1024 = kb /1024 = mb
+$MaxSize=   5120;			//Max. File size in bytes /1024 = kb /1024 = mb
 $FilePerm=  0444;
 $OutputExt= "prim";			//Converted data extension
 $LogFile=   "cad2sl.log";		//Name of debug log file	
