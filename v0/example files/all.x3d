@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D profile='Immersive' >
+<head>
+ <meta name='Vizthumbnail' content='Thumb_all_x3d689371268818434.jpg'/>
+ <meta name='ExportTime' content='10:33:54'/>
+ <meta name='ExportDate' content='3/17/2010'/>
+ <meta name='FluxStudioVersion' content='659'/>
+</head>
+<Scene>
+<WorldInfo
+ title='Untitled'
+ info='"This Web3D Content was created with Flux Studio, a Web3D authoring tool"
+ "www.mediamachines.com"'/>
+<Transform DEF='dad_Box1'
+ translation='-1.6473 0 -1.25835'>
+ <Shape DEF='Box1'
+  containerField='children'>
+  <Appearance
+   containerField='appearance'>
+   <Material DEF='Red'
+    containerField='material'
+    ambientIntensity='0.200'
+    shininess='0.200'
+    diffuseColor='1 0 0'/>
+  </Appearance>
+  <Box DEF='GeoBox1'
+   containerField='geometry'
+   size='1 1 1'/>
+ </Shape>
+</Transform>
+<Transform DEF='dad_Cylinder1'
+ translation='1.18971 0 -1.25835'>
+ <Shape DEF='Cylinder1'
+  containerField='children'>
+  <Appearance
+   containerField='appearance'>
+   <Material DEF='Green'
+    containerField='material'
+    ambientIntensity='0.200'
+    shininess='0.200'
+    diffuseColor='0 1 0'/>
+  </Appearance>
+  <Cylinder DEF='GeoCylinder1'
+   containerField='geometry'
+   height='2.000'
+   radius='1.000'/>
+ </Shape>
+</Transform>
+<Transform DEF='dad_Sphere1'
+ translation='-1.69305 0 1.21259'>
+ <Shape DEF='Sphere1'
+  containerField='children'>
+  <Appearance
+   containerField='appearance'>
+   <Material DEF='Blue'
+    containerField='material'
+    ambientIntensity='0.200'
+    shininess='0.200'
+    diffuseColor='0 0 1'/>
+  </Appearance>
+  <Sphere DEF='GeoSphere1'
+   containerField='geometry'
+   radius='1.000'/>
+ </Shape>
+</Transform>
+</Scene>
+</X3D>

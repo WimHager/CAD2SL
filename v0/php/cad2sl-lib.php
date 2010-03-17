@@ -92,15 +92,13 @@ function AddPhysical($Enable) {
 
 // SetPrimType-------------------------------------------------------------
 // 0 PRIM_TYPE_BOX 1 PRIM_TYPE_CYLINDER 2 PRIM_TYPE_PRISM 3 PRIM_TYPE_SPHERE
-// We do not support Type > 3 !!!
 
 function AddPrimType($Type) {
-	if ($Type < 3) {
-		$Param= "|1=0|5=<0.000000,1.000000,0.000000>|2=0.000000|5=<0.000000,0.000000,0.000000>|5=<1.000000,1.000000,0.000000>|5=<0.000000,0.000000,0.000000>";
-	}else{
-		$Param= "|1=0|5=<0.000000,1.000000,0.000000>|2=0.000000|5=<0.000000,0.000000,0.000000>|5=<0.000000,1.000000,0.000000>";
-	}
-  	return	"1=9|1=".$Type.$Param;
+	if ($Type == 0) $Param= "1=9|1=0|1=0|5=<0.000000,1.000000,0.000000>|2=0.000000|5=<0.000000,0.000000,0.000000>|5=<1.000000,1.000000,0.000000>|5=<0.000000,0.000000,0.000000>";
+	if ($Type == 1) $Param= "1=9|1=1|1=1|5=<0.000000,1.000000,0.000000>|2=0.000000|5=<0.000000,0.000000,0.000000>|5=<1.000000,1.000000,0.000000>|5=<0.000000,0.000000,0.000000>";
+	if ($Type == 2) $Param= "1=9|1=1|1=1|5=<0.000000,1.000000,0.000000>|2=0.000000|5=<0.000000,0.000000,0.000000>|5=<1.000000,1.000000,0.000000>|5=<0.000000,0.000000,0.000000>";
+	if ($Type == 3)	$Param= "1=9|1=3|1=0|5=<0.000000,1.000000,0.000000>|2=0.000000|5=<0.000000,0.000000,0.000000>|5=<0.000000,1.000000,0.000000>";
+  	return	$Param;
 }
 // ------------------------------------------------------------------------
 
@@ -156,18 +154,27 @@ function GetShapes($FileName) {
 					$ShapeArr[$ObjC]["Shape"]= "Sphere";
 					$Attributes= get_object_vars($Sphere); //Get Object Radius
 					$Radius= (string)$Attributes["@attributes"]["radius"];
-					//$Radius= explode(" ",$Radius);  //Make it XYZ
 					$ShapeArr[$ObjC]["Radius"]= $Radius; 
 				}
 
 				foreach ($Shape->Cylinder as $Cylinder) {
 					$ShapeArr[$ObjC]["Shape"]= "Cylinder";
-					$Attributes= get_object_vars($Cylinder); //Get Object Radius
+					$Attributes= get_object_vars($Cylinder); //Get Object Radius / Height
 					$Radius= (string)$Attributes["@attributes"]["radius"];
 					$ShapeArr[$ObjC]["Radius"]= $Radius; 
 					$Height= (string)$Attributes["@attributes"]["height"];
 					$ShapeArr[$ObjC]["Height"]= $Height; 
 				}
+
+				foreach ($Shape->Cone as $Cone) {
+					$ShapeArr[$ObjC]["Shape"]= "Cone";
+					$Attributes= get_object_vars($Cone); //Get Object Radius / Height
+					$Radius= (string)$Attributes["@attributes"]["bottomRadius"];
+					$ShapeArr[$ObjC]["Radius"]= $Radius; 
+					$Height= (string)$Attributes["@attributes"]["height"];
+					$ShapeArr[$ObjC]["Height"]= $Height; 
+				}
+
 			}
 			$ObjC++;
 		}
@@ -205,6 +212,10 @@ function ConvInputFileToOutputStr($FileN) {
 		}
 		if ($ShapeArr[$i]["Shape"] == "Cylinder") {
 			$PrimParmStr=  AddPrimType (1)."|"; //CYLINDER
+			$PrimParmStr.= AddBlockSize($ShapeArr[$i]["Radius"][0], $ShapeArr[$i]["Radius"][0], $ShapeArr[$i]["Height"][0])."|"; //Radius&Height
+		}
+		if ($ShapeArr[$i]["Shape"] == "Cone") {
+			$PrimParmStr=  AddPrimType (2)."|"; //CONE Be aware this is not a LSL Type !!!! due to fact that cone is a cylinder with X taper
 			$PrimParmStr.= AddBlockSize($ShapeArr[$i]["Radius"][0], $ShapeArr[$i]["Radius"][0], $ShapeArr[$i]["Height"][0])."|"; //Radius&Height
 		}
 		$PrimParmStr.= AddBlockPos ($ShapeArr[$i]["Pos"][0], $ShapeArr[$i]["Pos"][1], $ShapeArr[$i]["Pos"][2])."|";    //Pos
