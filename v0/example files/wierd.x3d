@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D profile='Immersive' >
+<head>
+ <meta name='Vizthumbnail' content='Thumb_wierd_x3d1044841268855114.jpg'/>
+ <meta name='ExportTime' content='20:45:14'/>
+ <meta name='ExportDate' content='3/17/2010'/>
+ <meta name='FluxStudioVersion' content='659'/>
+ <meta name='FluxStudioSource' content='../../../docume~1/admini~1/locals~1/temp/wierd.fxw'/>
+</head>
+<Scene>
+<WorldInfo
+ title='wierd'
+ info='"This Web3D Content was created with Flux Studio, a Web3D authoring tool"
+ "www.mediamachines.com"'/>
+<Transform DEF='dad_Box1'
+ translation='0 -4 0'>
+ <Shape DEF='Box1'
+  containerField='children'>
+  <Appearance
+   containerField='appearance'>
+   <Material DEF='Black'
+    containerField='material'
+    ambientIntensity='0.200'
+    shininess='0.200'
+    diffuseColor='0 0 0'/>
+  </Appearance>
+  <Box DEF='GeoBox1'
+   containerField='geometry'
+   size='10 8 4'/>
+ </Shape>
+</Transform>
+<Transform DEF='dad_Cylinder1'
+ translation='-5 -4 0'>
+ <Shape DEF='Cylinder1'
+  containerField='children'>
+  <Appearance
+   containerField='appearance'>
+   <Material DEF='Rust'
+    containerField='material'
+    ambientIntensity='0.200'
+    shininess='0.200'
+    diffuseColor='.69 .47 .46'/>
+  </Appearance>
+  <Cylinder DEF='GeoCylinder1'
+   containerField='geometry'
+   height='8.000'
+   radius='4.000'/>
+ </Shape>
+</Transform>
+<Transform DEF='dad_Cone1'
+ translation='-5 4 0'>
+ <Shape DEF='Cone1'
+  containerField='children'>
+  <Appearance
+   containerField='appearance'>
+   <Material DEF='Purple'
+    containerField='material'
+    ambientIntensity='0.200'
+    shininess='0.200'
+    diffuseColor='.9176 0 .874'/>
+  </Appearance>
+  <Cone DEF='GeoCone1'
+   containerField='geometry'
+   height='8.000'
+   bottomRadius='4.000'/>
+ </Shape>
+</Transform>
+<Transform DEF='dad_Sphere1'
+ translation='-5 9 0'>
+ <Shape DEF='Sphere1'
+  containerField='children'>
+  <Appearance
+   containerField='appearance'>
+   <Material DEF='Cyan'
+    containerField='material'
+    ambientIntensity='0.200'
+    shininess='0.200'
+    diffuseColor='0 1 1'/>
+  </Appearance>
+  <Sphere DEF='GeoSphere1'
+   containerField='geometry'
+   radius='1.000'/>
+ </Shape>
+</Transform>
+<Transform DEF='dad_Cone2'
+ translation='3.22595 5.21644 0'
+ rotation='0 0 1 .524'>
+ <Shape DEF='Cone2'
+  containerField='children'>
+  <Appearance
+   containerField='appearance'>
+   <Material DEF='Blue'
+    containerField='material'
+    ambientIntensity='0.200'
+    shininess='0.200'
+    diffuseColor='0 0 1'/>
+  </Appearance>
+  <Cone DEF='GeoCone2'
+   containerField='geometry'
+   height='2.000'
+   bottomRadius='1.000'/>
+ </Shape>
+</Transform>
+<Transform DEF='dad_Cylinder2'
+ translation='2.72261 2.01336 0'
+ rotation='0 0 1 .785'>
+ <Shape DEF='Cylinder2'
+  containerField='children'>
+  <Appearance
+   containerField='appearance'>
+   <Material DEF='Green'
+    containerField='material'
+    ambientIntensity='0.200'
+    shininess='0.200'
+    diffuseColor='0 1 0'/>
+  </Appearance>
+  <Cylinder DEF='GeoCylinder2'
+   containerField='geometry'
+   height='2.000'
+   radius='1.000'/>
+ </Shape>
+</Transform>
+<Transform DEF='dad_Box2'
+ translation='6.5663 1.92184 0'
+ rotation='.707 .5 .5 .524'>
+ <Shape DEF='Box2'
+  containerField='children'>
+  <Appearance
+   containerField='appearance'>
+   <Material DEF='Yellow'
+    containerField='material'
+    ambientIntensity='0.200'
+    shininess='0.200'
+    diffuseColor='1 1 0'/>
+  </Appearance>
+  <Box DEF='GeoBox2'
+   containerField='geometry'
+   size='1 1 1'/>
+ </Shape>
+</Transform>
+<Transform DEF='dad_Sphere2'
+ translation='22.6732 0 0'>
+ <Shape DEF='Sphere2'
+  containerField='children'>
+  <Appearance
+   containerField='appearance'>
+   <Material DEF='Red'
+    containerField='material'
+    ambientIntensity='0.200'
+    shininess='0.200'
+    diffuseColor='1 0 0'/>
+  </Appearance>
+  <Sphere DEF='GeoSphere2'
+   containerField='geometry'
+   radius='1.000'/>
+ </Shape>
+</Transform>
+</Scene>
+</X3D>

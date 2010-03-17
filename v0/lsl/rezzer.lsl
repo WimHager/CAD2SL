@@ -13,8 +13,9 @@
 //    You should have received a copy of the GNU General Public License
 //    along with CAD2SL.  If not, see <http://www.gnu.org/licenses/>.
 
-//ToDo first get prim count.
 string  Url= "http://to your/cad2sl-bridge.php";
+integer Debug= FALSE;
+
 string  ObjectName;
 integer ObjectPrims;
 integer CommCh= -2010;
@@ -45,8 +46,9 @@ default
 
     timer() {
         llRezObject("builder", llGetPos() + <0.0,0.0,0.5>, <0.0,0.0,0.0>, <0.0,0.0,0.0,0.0>, Counter);
-        llSleep(0.3); //Wait for Rezz        
-        llSay(CommCh,ObjectName);        
+        llSleep(0.3); //Wait for Rezz 
+        llSay(CommCh,Url+"|"+ObjectName+"|"+(string)Debug);       
+        //llSay(CommCh,ObjectName);        
         Counter++;
         if (Counter >= ObjectPrims) llSetTimerEvent(0);
     }

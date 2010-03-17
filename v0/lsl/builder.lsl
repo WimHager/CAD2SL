@@ -13,9 +13,8 @@
 //    You should have received a copy of the GNU General Public License
 //    along with CAD2SL.  If not, see <http://www.gnu.org/licenses/>.
 
-string  Url= "http://path to server/cad2sl-bridge.php";
-
-float   UpdateTime= 2; //prim updates in Ses
+string  Url;
+float   UpdateTime= 2; //prim updates in Sec
 integer CommCh= -2010;
 
 string  ObjectName;
@@ -29,6 +28,7 @@ list    PrevPrimParmLst;
 key     HttpRequestId;
 integer ListenHandle;
 vector  OrgPos;
+integer Debug;
 
 
 string GetSubString(string String, string StartStr, string EndStr) { // Use EOL for End Of line
@@ -116,7 +116,8 @@ default
                 //llOwnerSay(PrimData);
                 if (Hash == llMD5String(PrimData,0)) { 
                     PrimData= PosCorrection(PrimData); //Add Pos to rezz point           
-                    llOwnerSay(PrimData);
+                    if (Debug) llOwnerSay("URL: "+Url+" "+ObjectName); 
+                    if (Debug) llOwnerSay(PrimData);
                     PrimParmLst= Deserialize(PrimData);
                     if (!ListCompare(PrimParmLst,PrevPrimParmLst)) {
                         //llOwnerSay("Master Prim Data Changed.");
@@ -130,19 +131,22 @@ default
         } 
     }
     
-    listen( integer Ch, string Name, key ID, string Msg) {
+    listen( integer Ch, string Name, key ID, string MsgStr) {
         if ( Ch == CommCh ) {
-            if ( Msg == "Kill" ) { llSay(0,"Outch prim "+(string)PrimNr+" is killed"); llDie(); }
-            if ( llSubStringIndex(Msg,"prim") != -1 ) { //Msg contains prim name
-                ObjectName= Msg;
-                if (!PrimRezzed) llSetTimerEvent(UpdateTime); 
-                PrimRezzed= TRUE;
-            }    
+        list MsgL= llParseString2List(MsgStr, ["|"], []);
+            if ( llList2String(MsgL,0) == "Kill" ) { llSay(0,"Outch prim "+(string)PrimNr+" is killed"); llDie(); }
+            Url= llList2String(MsgL,0);
+            ObjectName= llList2String(MsgL,1); 
+            Debug= llList2Integer(MsgL,2);
+            if (!PrimRezzed) llSetTimerEvent(UpdateTime); 
+            PrimRezzed= TRUE;
         }    
     }   
     
     on_rez(integer StartParm) {
         PrimNr= StartParm;
+        Url= "";
+        Debug= FALSE;
         OrgPos= llGetPos();
         PrimRezzed= FALSE;  //Ugly need a redo !!!
         llSetPrimitiveParams([PRIM_SIZE, <0.1,0.1,0.1>]);
