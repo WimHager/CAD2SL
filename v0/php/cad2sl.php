@@ -67,6 +67,10 @@ if($_SERVER['HTTP_HOST']) { //Are we started from prompt or web.
 			echo "Upload has failed!!!";
 		}
 	}
+}else{
+	$InF= 	$argv[1]; //input file as command line input
+	$OutF=	preg_replace('/\..+$/', '.' . $GLOBALS['OutputExt'], $InF);
+	WriteData(ConvInputFileToOutputStr($InF), $OutF);
 }
 ?>
 <br />
