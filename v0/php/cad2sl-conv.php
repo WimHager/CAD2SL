@@ -24,7 +24,8 @@ include 'cad2sl-lib.php';
 // Main
 //==========================================================================
 
-$InF= 	"rotate.x3d";
+$InF= 	"cyl.x3d";
+$InF=   $argv[1];
 $OutF=	preg_replace('/\..+$/', '.' . $GLOBALS['OutputExt'], $InF);
 
 WriteData(ConvInputFileToOutputStr($InF), $OutF);

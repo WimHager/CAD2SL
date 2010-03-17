@@ -143,6 +143,7 @@ function GetShapes($FileName) {
 						else $ShapeArr[$ObjC]["Color"]= $Color; //Get Object Color
 					}	
 				}
+
 				foreach ($Shape->Box as $Box) {
 					$ShapeArr[$ObjC]["Shape"]= "Box";
 					$Attributes= get_object_vars($Box); //Get Object Size
@@ -155,8 +156,17 @@ function GetShapes($FileName) {
 					$ShapeArr[$ObjC]["Shape"]= "Sphere";
 					$Attributes= get_object_vars($Sphere); //Get Object Radius
 					$Radius= (string)$Attributes["@attributes"]["radius"];
-					$Radius= explode(" ",$Radius);  //Make it XYZ
+					//$Radius= explode(" ",$Radius);  //Make it XYZ
 					$ShapeArr[$ObjC]["Radius"]= $Radius; 
+				}
+
+				foreach ($Shape->Cylinder as $Cylinder) {
+					$ShapeArr[$ObjC]["Shape"]= "Cylinder";
+					$Attributes= get_object_vars($Cylinder); //Get Object Radius
+					$Radius= (string)$Attributes["@attributes"]["radius"];
+					$ShapeArr[$ObjC]["Radius"]= $Radius; 
+					$Height= (string)$Attributes["@attributes"]["height"];
+					$ShapeArr[$ObjC]["Height"]= $Height; 
 				}
 			}
 			$ObjC++;
@@ -192,6 +202,10 @@ function ConvInputFileToOutputStr($FileN) {
 		if ($ShapeArr[$i]["Shape"] == "Sphere") {
 			$PrimParmStr=  AddPrimType (3)."|"; //SPHERE
 			$PrimParmStr.= AddBlockSize($ShapeArr[$i]["Radius"][0], $ShapeArr[$i]["Radius"][0], $ShapeArr[$i]["Radius"][0])."|"; //Radius
+		}
+		if ($ShapeArr[$i]["Shape"] == "Cylinder") {
+			$PrimParmStr=  AddPrimType (1)."|"; //CYLINDER
+			$PrimParmStr.= AddBlockSize($ShapeArr[$i]["Radius"][0], $ShapeArr[$i]["Radius"][0], $ShapeArr[$i]["Height"][0])."|"; //Radius&Height
 		}
 		$PrimParmStr.= AddBlockPos ($ShapeArr[$i]["Pos"][0], $ShapeArr[$i]["Pos"][1], $ShapeArr[$i]["Pos"][2])."|";    //Pos
 		$PrimParmStr.= AddBlockCol ($ShapeArr[$i]["Color"])."|";  //Color
