@@ -1,6 +1,6 @@
 <h3>x3d upload interface for CAD2SL</h3>
 
-<?php 
+<?php
 
 /*
     This file is part of CAD2SL.
