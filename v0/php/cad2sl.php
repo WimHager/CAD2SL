@@ -1,5 +1,3 @@
-<h3>x3d upload interface for CAD2SL</h3>
-
 <?php
 
 /*
@@ -71,8 +69,11 @@ if($_SERVER['HTTP_HOST']) { //Are we started from prompt or web.
 	$InF= 	$argv[1]; //input file as command line input
 	$OutF=	preg_replace('/\..+$/', '.' . $GLOBALS['OutputExt'], $InF);
 	WriteData(ConvInputFileToOutputStr($InF), $OutF);
+	echo "Conversion Completed\n";
+	exit;
 }
 ?>
+<h3>x3d upload interface for CAD2SL</h3>
 <br />
 <form method="post" action="" enctype="multipart/form-data">
 <input type="file" name="file" /><br />
