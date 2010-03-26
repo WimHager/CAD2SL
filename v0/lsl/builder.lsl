@@ -14,7 +14,7 @@
 //    along with CAD2SL.  If not, see <http://www.gnu.org/licenses/>.
 
 string  Url;
-float   UpdateTime= 2; //prim updates in Sec
+float   UpdateTime= 2; //prim updates in Ses
 integer CommCh= -2010;
 
 string  ObjectName;
@@ -83,7 +83,14 @@ string StrReplace(string Src, string From, string To) {//replaces all occurrence
 }
 
 string GetPosPartFromStream(string Stream) {
-    integer StartPos= llSubStringIndex(Stream,"|1=6|5=");       //Look for Pos start in stream
+    integer StartPos= llSubStringIndex(Stream,"|1=6|5="); //Look for Pos start in stream
+    string  TmpStr=   llDeleteSubString(Stream, 0, StartPos);
+    integer EndPos=   llSubStringIndex(TmpStr,">")+1;
+    return llGetSubString(TmpStr,0,EndPos);
+}    
+
+string GetRotPartFromStream(string Stream) {
+    integer StartPos= llSubStringIndex(Stream,"|1=8|6="); //Look for Pos start in stream
     string  TmpStr=   llDeleteSubString(Stream, 0, StartPos);
     integer EndPos=   llSubStringIndex(TmpStr,">")+1;
     return llGetSubString(TmpStr,0,EndPos);
@@ -97,7 +104,27 @@ string PosCorrection(string Stream) { //Replaces Stream with Pos relative rezz p
     string NewStream= StrReplace(Stream,PosStr,NewPosStr);
     //llOwnerSay(NewStream);
     return NewStream;
-}    
+}  
+  
+//NEED some work is it 0.3???? for correction
+string RotCorrection(string Stream) { //Replaces Stream with Rot with YZ swapped
+    //llOwnerSay(Stream);
+    string PosStr= GetRotPartFromStream(Stream);
+    rotation CadRot= (rotation)llGetSubString(PosStr,6,-1);
+    if (CadRot.s != 0.00) { //no rotation do nothing
+        if (CadRot.s > 0.00) CadRot.s= CadRot.s - 0.3; else CadRot.s= CadRot.s + 0.3;
+    }        
+    vector Euler= llRot2Euler(CadRot);
+    float TempZ= Euler.z; //Swap YZ
+    Euler.z= Euler.y;
+    Euler.y= TempZ;
+    //llOwnerSay((string)CadRot.s);    
+    rotation NewRot= llEuler2Rot(Euler);
+    string NewRotStr= "1=8|6="+(string)NewRot+"|";
+    string NewStream= StrReplace(Stream,PosStr,NewRotStr);
+    //llOwnerSay(NewStream);
+    return NewStream;
+}       
 
 default
 {
@@ -115,7 +142,8 @@ default
                 ObjectPrims= (integer)llStringTrim(GetSubString(Body,"&total=","EOL"),STRING_TRIM);
                 //llOwnerSay(PrimData);
                 if (Hash == llMD5String(PrimData,0)) { 
-                    PrimData= PosCorrection(PrimData); //Add Pos to rezz point           
+                    PrimData= PosCorrection(PrimData); //Add Pos to rezz point  
+                    PrimData= RotCorrection(PrimData); //Swap YZ           
                     if (Debug) llOwnerSay("URL: "+Url+" "+ObjectName); 
                     if (Debug) llOwnerSay(PrimData);
                     PrimParmLst= Deserialize(PrimData);
