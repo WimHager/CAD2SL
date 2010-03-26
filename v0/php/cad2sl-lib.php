@@ -204,7 +204,7 @@ function ConvInputFileToOutputStr($FileN) {
 	foreach ($ShapeArr as $Parts) {
 		if ($ShapeArr[$i]["Shape"] == "Box") {
 			$PrimParmStr=  AddPrimType (0)."|"; //BOX
-			$PrimParmStr.= AddBlockSize($ShapeArr[$i]["Size"][0], $ShapeArr[$i]["Size"][1], $ShapeArr[$i]["Size"][2])."|"; //Size
+			$PrimParmStr.= AddBlockSize($ShapeArr[$i]["Size"][0], $ShapeArr[$i]["Size"][2], $ShapeArr[$i]["Size"][1])."|"; //Size
 		}
 		if ($ShapeArr[$i]["Shape"] == "Sphere") {
 			$PrimParmStr=  AddPrimType (3)."|"; //SPHERE
@@ -212,13 +212,13 @@ function ConvInputFileToOutputStr($FileN) {
 		}
 		if ($ShapeArr[$i]["Shape"] == "Cylinder") {
 			$PrimParmStr=  AddPrimType (1)."|"; //CYLINDER
-			$PrimParmStr.= AddBlockSize($ShapeArr[$i]["Radius"][0]*2, $ShapeArr[$i]["Radius"][0]*2, $ShapeArr[$i]["Height"][0])."|"; //Radius&Height SL uses Dia!!
+			$PrimParmStr.= AddBlockSize($ShapeArr[$i]["Radius"][0]*2, $ShapeArr[$i]["Height"][0], $ShapeArr[$i]["Radius"][0]*2)."|"; //Radius&Height SL uses Dia!!
 		}
 		if ($ShapeArr[$i]["Shape"] == "Cone") {
 			$PrimParmStr=  AddPrimType (2)."|"; //CONE Be aware this is not a LSL Type !!!! due to fact that cone is a cylinder with X taper
-			$PrimParmStr.= AddBlockSize($ShapeArr[$i]["Radius"][0]*2, $ShapeArr[$i]["Radius"][0]*2, $ShapeArr[$i]["Height"][0])."|"; //Radius&Height
+			$PrimParmStr.= AddBlockSize($ShapeArr[$i]["Radius"][0]*2, $ShapeArr[$i]["Height"][0], $ShapeArr[$i]["Radius"][0]*2)."|"; //Radius&Height
 		}
-		$PrimParmStr.= AddBlockPos ($ShapeArr[$i]["Pos"][0], $ShapeArr[$i]["Pos"][1], $ShapeArr[$i]["Pos"][2])."|";    //Pos
+		$PrimParmStr.= AddBlockPos ($ShapeArr[$i]["Pos"][0], $ShapeArr[$i]["Pos"][2], $ShapeArr[$i]["Pos"][1])."|";    //Pos
 		$PrimParmStr.= AddBlockCol ($ShapeArr[$i]["Color"])."|";  //Color
 		$PrimParmStr.= AddBlockRot ($ShapeArr[$i]["Rot"][0], $ShapeArr[$i]["Rot"][1], $ShapeArr[$i]["Rot"][2], $ShapeArr[$i]["Rot"][3]); //Rot
 		$PrimParmStr= CountParms($PrimParmStr)."|".$PrimParmStr; // add objects count at begin
